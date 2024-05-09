@@ -12,9 +12,13 @@ def homepage():
 def about():
         return "about"
 
-@app.route('/Assassin/<int:id>')
-def assassin():
-    return "Assassin"
+@app.route('/assassin/<int:id>')
+def assassin(id):
+    conn = sqlite3.connect('ACDB.db')
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM Character WHERE CharacterID = ?',(id,))
+    assassin = cur.fetchone()
+    return render_template('character.html', assassin = assassin)
 
 
 if __name__ == "__main__":
