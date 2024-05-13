@@ -20,6 +20,13 @@ def assassin(id):
     assassin = cur.fetchone()
     return render_template('character.html', assassin = assassin)
 
+@app.route('/all_assassins')
+def all_assassins():
+    conn = sqlite3.connect('ACDB.db')
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM Character ORDER BY Characterid;')
+    assassin = cur.fetchall()
+    return render_template('character.html', assassin = assassin)
 
 if __name__ == "__main__":
     app.run(debug=True)  # MUST BE FINAL LINE
