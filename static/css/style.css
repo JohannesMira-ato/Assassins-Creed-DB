@@ -1,19 +1,27 @@
 /* Reset Margin */
 *{
     margin: 0%;
+    font-family: 'Julius Sans One';
 }
 /* Grid and style for the header */
 .header{
 display: grid;
-grid-template-columns: 1fr 1fr 1fr;
+grid-template-columns: 1fr 3fr 1fr;
 text-align: center;
 position: relative;
 background-color: #2C2D2E;
-padding: 10px;
-font-size: 40px;
+font-size: 50px;
+padding: 20px;
 }
 /* Colour change for hyperlink */
 a{
     color: #FFFFFF;
     text-decoration: none;
+}
+
+.header-item{
+    padding-right: 20px;
+    padding-top: 20px;
+    position: relative;
+    top: 40px;
   }
