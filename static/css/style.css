@@ -25,3 +25,26 @@ a{
     position: relative;
     top: 40px;
   }
+
+.image-container{
+    position: relative;
+    display: inline-block;
+}
+
+.image-container img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.overlay-text{
+position: absolute;
+  top:400px; 
+  left: 300px; 
+  transform: translate(-50%, -50%); 
+  background-color: #2C2D2E;
+  color: rgb(255, 255, 255); 
+  padding: 10px 20px; 
+  font-size: 60px; 
+  text-align: center;
+}
