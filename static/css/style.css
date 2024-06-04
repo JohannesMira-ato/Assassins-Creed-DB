@@ -18,25 +18,25 @@ a{
     color: #FFFFFF;
     text-decoration: none;
 }
-
+/* Styling items in header except logo */
 .header-item{
     padding-right: 20px;
     padding-top: 20px;
     position: relative;
     top: 40px;
   }
-
+/* Container for hero img */
 .image-container{
     position: relative;
     display: inline-block;
 }
-
+/* Img for the hero page */
 .image-container img {
     display: block;
     width: 100%;
     height: auto;
 }
-
+/* Text on top of hero img */
 .overlay-text{
 position: absolute;
   top:400px; 
@@ -47,4 +47,9 @@ position: absolute;
   padding: 10px 20px; 
   font-size: 60px; 
   text-align: center;
+}
+/* Top section of footer */
+.footer-top{
+    display: grid;
+    grid-template-columns: 2fr 4fr 1fr 4fr 2fr;
 }
