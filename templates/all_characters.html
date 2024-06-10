@@ -1,7 +1,11 @@
 {%extends 'layout.html'%}
 
-{%block content%}
+{% block content %}
+  {% for assassin in assassins %}
+    <p>
+      {{assassin[1]}}
+    </p>
+  {% endfor %}
 
-{% for assassin in assassins}
- 
-(%endblock%)
+
+{% endblock %}

@@ -1,16 +1,8 @@
 {%extends 'layout.html'%}
 {%block content%}
-<!-- {{assassin[1]}} Assassin is the name of the "list" / fetchone
-    the number is the position of the information being printed-->
-<h2>{{assassin[1]}}</h2>  
-<p>{{assassin[2]}}</p>
-<p>{{assassin[3]}}</p>
-<p>{{assassin[4]}}</p>
-<p>{{assassin[5]}}</p>
-<p>{{assassin[6]}}</p>
-<p>{{assassin[7]}}</p>
-<p>{{assassin[8]}}</p>
+<div class="character-hero">
+    <div><img src="/static/images/{{assassin[8]}}" alt="{assassin[1]}"></div>
+    <div><h1>{{assassin[1]}}</h1></div>
+</div>
 
-
-<img src="{{assassin[4]}}" alt="">
 {%endblock%}

@@ -28,9 +28,9 @@ def all_assassins():
     # TODO make from conn =, to assassin =, a single function
     conn = sqlite3.connect('ACDB.db')
     cur = conn.cursor()
-    cur.execute('SELECT * FROM Character ORDER BY Characterid;')
-    assassin = cur.fetchall()
-    return render_template('character.html', assassin = assassin)
+    cur.execute('SELECT * FROM Character ORDER BY CharacterID;')
+    assassins = cur.fetchall()
+    return render_template('all_characters.html', assassins = assassins)
 
 if __name__ == "__main__":
     app.run(debug=True)  # MUST BE FINAL LINE
