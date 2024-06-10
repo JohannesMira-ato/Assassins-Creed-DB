@@ -2,6 +2,7 @@
 *{
     margin: 0%;
     font-family: 'Julius Sans One';
+    background-color: #2C2D2E;
 }
 /* Grid and style for the header */
 .header{
@@ -48,8 +49,31 @@ position: absolute;
   font-size: 60px; 
   text-align: center;
 }
+
+.footer{
+    background-color: #2C2D2E;
+}
+
 /* Top section of footer */
 .footer-top{
     display: grid;
     grid-template-columns: 2fr 4fr 1fr 4fr 2fr;
+    color: #FFFFFF;
+}
+/* Bottom section of footer */
+.footer-bot{
+    display: grid;
+    grid-template-columns: 4fr 1fr 1fr 1fr 4fr;
+    position:relative;
+}
+/* Bottom section of footer text */
+.footer-bot-text{
+    position: relative;
+    top: 10px;
+    color: #FFFFFF;
+}
+/* Bottom section of footer img */
+.footer-bot-img{
+    position: relative;
+    left: 35px;
 }
