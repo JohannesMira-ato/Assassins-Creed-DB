@@ -77,3 +77,8 @@ position: absolute;
     position: relative;
     left: 35px;
 }
+/* Grid for individual assassin page displaying assassin*/
+.character-hero{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
