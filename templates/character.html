@@ -1,8 +1,17 @@
 {%extends 'layout.html'%}
 {%block content%}
 <div class="character-hero">
-    <div><img src="/static/images/{{assassin[8]}}" alt="{assassin[1]}" height="1100"></div>
-    <div><h1>{{assassin[1]}}</h1></div>
+    <div><img src="/static/images/{{assassin[8]}}" alt="{assassin[1]}" class="character-img" height="1100"></div>
+    <div>
+        <h1 class="character-text">{{assassin[1]}}</h1>
+        <h3 class="character-text">{{assassin[7]}}</h3>
+        <h3 class="character-text">Alias: {{assassin[2]}}</h3>
+        <h3 class="character-text">Birthdate: {{assassin[3]}}</h3>
+        <h3 class="character-text">Deathdate: {{assassin[4]}}</h3>
+        <h3 class="character-text">Gender: {{assassin[5]}}</h3>
+        <h3 class="character-text">Affiliation: {{assassin[6]}}</h3>
+
+    </div>
 </div>
 
 {%endblock%}

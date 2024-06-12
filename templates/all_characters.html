@@ -2,9 +2,7 @@
 
 {% block content %}
   {% for assassin in assassins %}
-    <p>
-      {{assassin[1]}}
-    </p>
+<a href="/assassin/{{assassin[0]}}">{{assassin[1]}} <br></a>
   {% endfor %}
 
 
