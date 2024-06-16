@@ -80,7 +80,7 @@ position: absolute;
 /* Grid for individual assassin page displaying assassin*/
 .character-hero{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 2fr .1fr;
 }
 
 .character-img{
@@ -89,4 +89,7 @@ position: absolute;
 
 .character-text{
     color: #FFFFFF;
+    font-size: 45px;
+    position: relative;
+    top: 10%;
 }
