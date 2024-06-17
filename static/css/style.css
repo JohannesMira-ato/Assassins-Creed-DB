@@ -93,3 +93,9 @@ position: absolute;
     position: relative;
     top: 10%;
 }
+
+.all-assassin{
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    text-align: center;
+}
