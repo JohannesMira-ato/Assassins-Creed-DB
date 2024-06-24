@@ -94,8 +94,15 @@ position: absolute;
     top: 10%;
 }
 
-.all-assassin{
+.all-assassin-grid{
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    text-align: center;
+    grid-template-columns: repeat(3, 1fr);
+    position: relative; 
+    margin: 10px;
+}
+
+.all-asasssin{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
