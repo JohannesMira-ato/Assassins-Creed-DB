@@ -19,7 +19,7 @@ def assassin(id):
     cur = conn.cursor()
     cur.execute('SELECT * FROM Character WHERE CharacterID = ?',(id,))
     assassin = cur.fetchone()
-    return render_template('character.html', assassin = assassin)
+    return render_template('character.html', assassin=assassin)
 
 
 # Page for all assassins 
@@ -30,7 +30,47 @@ def all_assassins():
     cur = conn.cursor()
     cur.execute('SELECT * FROM Character ORDER BY CharacterID;')
     assassins = cur.fetchall()
-    return render_template('all_characters.html', assassins = assassins)
+    return render_template('all_characters.html', assassins=assassins)
+
+# Page for all Weapons
+@app.route('/all_weapons')
+def all_weapons():
+    # TODO make from conn =, to assassin =, a single function
+    conn = sqlite3.connect('ACDB.db')
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM Weapon ORDER BY WeaponID;')
+    weapons = cur.fetchall()
+    return render_template('', weapons=weapons)
+
+# Page for individual weapons
+@app.route('/weapon/<int:id>')
+def weapon(id):
+    # TODO make from conn =, to assassin =, a single function
+    conn = sqlite3.connect('ACDB.db')
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM Weapon WHERE WeaponID = ?',(id,))
+    weapon = cur.fetchone()
+    return render_template('', weapon=weapon)
+
+# Page for all Games
+@app.route('/all_games')
+def all_games():
+    # TODO make from conn =, to assassin =, a single function
+    conn = sqlite3.connect('ACDB.db')
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM Game ORDER BY GameID;')
+    games = cur.fetchall()
+    return render_template('', games=games)
+
+# Page for individual games
+@app.route('/game/<int:id>')
+def game(id):
+    # TODO make from conn =, to assassin =, a single function
+    conn = sqlite3.connect('ACDB.db')
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM Weapon WHERE WeaponID = ?',(id,))
+    game = cur.fetchone()
+    return render_template('', game=game)
 
 if __name__ == "__main__":
     app.run(debug=True)  # MUST BE FINAL LINE
