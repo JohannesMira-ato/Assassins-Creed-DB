@@ -4,8 +4,8 @@
 <div class="all-assassin-grid">
   {% for assassin in assassins %}
   <div class="all-asasssin">
+    <a href="/assassin/{{assassin[0]}}"><img src="/static/images/{{assassin[9]}}" height="200px" alt=""></a>
     <a href="/assassin/{{assassin[0]}}">{{assassin[1]}} <br></a>
-    <a href="/assassin/{{assassin[0]}}"><img src="/static/images/{{assassin[8]}}" height="200px" alt=""></a>
   </div>
 {% endfor %}
 </div>
