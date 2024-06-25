@@ -1,0 +1,11 @@
+{%extends 'layout.html'%}
+
+{%block content%}
+<div class="all-games-grid">
+{% for game in games %}
+<div class="all-games">
+    <a href="/game/{{game[0]}}">{{game[1]}}</a>
+</div>
+{%endfor%}
+</div>
+{%endblock%}

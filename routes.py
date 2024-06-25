@@ -40,7 +40,7 @@ def all_weapons():
     cur = conn.cursor()
     cur.execute('SELECT * FROM Weapon ORDER BY WeaponID;')
     weapons = cur.fetchall()
-    return render_template('', weapons=weapons)
+    return render_template('all_weapons.html', weapons=weapons)
 
 # Page for individual weapons
 @app.route('/weapon/<int:id>')
@@ -50,7 +50,7 @@ def weapon(id):
     cur = conn.cursor()
     cur.execute('SELECT * FROM Weapon WHERE WeaponID = ?',(id,))
     weapon = cur.fetchone()
-    return render_template('', weapon=weapon)
+    return render_template('weapon.html', weapon=weapon)
 
 # Page for all Games
 @app.route('/all_games')
@@ -60,7 +60,7 @@ def all_games():
     cur = conn.cursor()
     cur.execute('SELECT * FROM Game ORDER BY GameID;')
     games = cur.fetchall()
-    return render_template('', games=games)
+    return render_template('all_games.html', games=games)
 
 # Page for individual games
 @app.route('/game/<int:id>')
@@ -70,7 +70,8 @@ def game(id):
     cur = conn.cursor()
     cur.execute('SELECT * FROM Weapon WHERE WeaponID = ?',(id,))
     game = cur.fetchone()
-    return render_template('', game=game)
+    return render_template('game.html', game=game)
+
 
 if __name__ == "__main__":
     app.run(debug=True)  # MUST BE FINAL LINE
