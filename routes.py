@@ -68,7 +68,7 @@ def game(id):
     # TODO make from conn =, to assassin =, a single function
     conn = sqlite3.connect('ACDB.db')
     cur = conn.cursor()
-    cur.execute('SELECT * FROM Weapon WHERE WeaponID = ?',(id,))
+    cur.execute('SELECT * FROM Game WHERE GameID = ?',(id,))
     game = cur.fetchone()
     return render_template('game.html', game=game)
 
