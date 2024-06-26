@@ -94,7 +94,7 @@ position: absolute;
     top: 10%;
 }
 
-.all-assassin-grid{
+.all-grid{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     position: relative; 
@@ -111,7 +111,7 @@ position: absolute;
     margin-top: 100px;
 } */
 
-.all-asasssin{
+.all-container{
     width: 325px;
     background-color: #2C2D2E;
     border-radius: 10px;
@@ -122,12 +122,12 @@ position: absolute;
     font-size: 35px;
 }
 
-.all-asasssin img{
+.all-container img{
     width: 100%;
     height: 440px;
     object-fit: cover;
 }
 
-.all-asasssin:hover{
+.all-container:hover{
     transform: translateY(-20px);
 }

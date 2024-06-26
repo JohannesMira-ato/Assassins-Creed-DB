@@ -1,9 +1,9 @@
 {%extends 'layout.html'%}
 
 {% block content %}
-<div class="all-assassin-grid">
+<div class="all-grid">
   {% for assassin in assassins %}
-  <div class="all-asasssin">
+  <div class="all-container">
     <a href="/assassin/{{assassin[0]}}"><img src="/static/images/{{assassin[9]}}" alt=""></a>
     <br>
     <a href="/assassin/{{assassin[0]}}">{{assassin[1]}}</a>
