@@ -1,5 +1,14 @@
 {%extends 'layout.html'%}
-
 {%block content%}
-{{game[1]}}
+<div class="character-hero">
+    <div><img src="/static/images/{{game[4]}}" alt="{game[4]}" class="character-img" height="1100"></div>
+    <div>
+        <h1 class="character-text">{{game[1]}}</h1>
+        <br>
+        <h3 class="character-text">{{game[2]}}</h3>
+
+    </div>
+    <div></div>
+</div>
+
 {%endblock%}
