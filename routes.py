@@ -11,6 +11,12 @@ def homepage():
 @app.route('/about')
 def about():
         return "about"
+
+# Page to edit database
+@app.route('/database')
+def database():
+    return render_template("database.html")
+
 # Page for individual assassins
 @app.route('/assassin/<int:id>')
 def assassin(id):

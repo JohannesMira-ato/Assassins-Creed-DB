@@ -1,6 +1,14 @@
 {%extends 'layout.html'%}
 
-{%block content%}
-{% for weapon in weapons%}
-<a href="/weapon/{{weapon[0]}}">{{weapon[1]}}</a><br>{%endfor%}
-{%endblock%}
+{% block content %}
+<div class="all-grid">
+  {% for weapon in weapons %}
+  <div class="all-container">
+    <a href="/weapon/{{weapon[0]}}"><img src="/static/images/placeholder.png" alt=""></a>
+    <br>
+    <a href="/weapon/{{weapon[0]}}">{{weapon[1]}}</a>
+  </div>
+{% endfor %}
+</div>
+
+{% endblock %}
