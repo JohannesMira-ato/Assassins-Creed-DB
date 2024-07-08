@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import sqlite3
+import db
 
 app = Flask(__name__)
 
@@ -10,7 +11,7 @@ def homepage():
 
 @app.route('/about')
 def about():
-        return "about"
+    return "about"
 
 @app.route('/database')
 def database():
@@ -19,15 +20,26 @@ def database():
 # Page to add to characters table
 @app.route('/database/character/add')
 def database_character_add():
+    name = (request.args.get("character-name"))
+    alias = (request.args.get("character-alias"))
+    birthdate = (request.args.get("character-birthdate"))
+    deathdate = (request.args.get("character-deathdate"))
+    gender = (request.args.get("character-gender"))
+    affiliation = (request.args.get("character-affiliation"))
+    description = (request.args.get("character-description"))
+    image = (request.args.get("character-image"))
+    profile_image = (request.args.get("character-profileimage"))
+    db.add_character(name, alias, birthdate, deathdate, gender,
+                     affiliation, description, image, profile_image)
     return render_template("database_character_add.html")
 
 # Page for individual assassins
 @app.route('/assassin/<int:id>')
 def assassin(id):
     # TODO make from conn =, to assassin =, a single function
-    conn = sqlite3.connect('ACDB.db')
+    conn = sqlite3.connect('ACDB - Copy.db')
     cur = conn.cursor()
-    cur.execute('SELECT * FROM Character WHERE CharacterID = ?',(id,))
+    cur.execute('SELECT * FROM Character WHERE CharacterID = ?', (id,))
     assassin = cur.fetchone()
     return render_template('character.html', assassin=assassin)
 
@@ -36,7 +48,7 @@ def assassin(id):
 @app.route('/all_assassins')
 def all_assassins():
     # TODO make from conn =, to assassin =, a single function
-    conn = sqlite3.connect('ACDB.db')
+    conn = sqlite3.connect('ACDB - Copy.db')
     cur = conn.cursor()
     cur.execute('SELECT * FROM Character ORDER BY CharacterID;')
     assassins = cur.fetchall()
@@ -46,7 +58,7 @@ def all_assassins():
 @app.route('/all_weapons')
 def all_weapons():
     # TODO make from conn =, to assassin =, a single function
-    conn = sqlite3.connect('ACDB.db')
+    conn = sqlite3.connect('ACDB - Copy.db')
     cur = conn.cursor()
     cur.execute('SELECT * FROM Weapon ORDER BY WeaponID;')
     weapons = cur.fetchall()
@@ -56,9 +68,9 @@ def all_weapons():
 @app.route('/weapon/<int:id>')
 def weapon(id):
     # TODO make from conn =, to assassin =, a single function
-    conn = sqlite3.connect('ACDB.db')
+    conn = sqlite3.connect('ACDB - Copy.db')
     cur = conn.cursor()
-    cur.execute('SELECT * FROM Weapon WHERE WeaponID = ?',(id,))
+    cur.execute('SELECT * FROM Weapon WHERE WeaponID = ?', (id,))
     weapon = cur.fetchone()
     return render_template('weapon.html', weapon=weapon)
 
@@ -66,7 +78,7 @@ def weapon(id):
 @app.route('/all_games')
 def all_games():
     # TODO make from conn =, to assassin =, a single function
-    conn = sqlite3.connect('ACDB.db')
+    conn = sqlite3.connect('ACDB - Copy.db')
     cur = conn.cursor()
     cur.execute('SELECT * FROM Game ORDER BY GameID;')
     games = cur.fetchall()
@@ -76,7 +88,7 @@ def all_games():
 @app.route('/game/<int:id>')
 def game(id):
     # TODO make from conn =, to assassin =, a single function
-    conn = sqlite3.connect('ACDB.db')
+    conn = sqlite3.connect('ACDB - Copy.db')
     cur = conn.cursor()
     cur.execute('SELECT * FROM Game WHERE GameID = ?',(id,))
     game = cur.fetchone()
