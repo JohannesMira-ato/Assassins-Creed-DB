@@ -17,8 +17,13 @@ def about():
 def database():
     return render_template('database.html')
 
+# Page to route user to which table in database to add to
+@app.route('/database/add')
+def database_add():
+    return render_template('database_add.html')
+
 # Page to add to characters table
-@app.route('/database/character/add')
+@app.route('/database/add/character')
 def database_character_add():
     name = (request.args.get("character-name"))
     alias = (request.args.get("character-alias"))
