@@ -2,6 +2,12 @@ from flask import Flask, render_template, request
 import db
 
 app = Flask(__name__)
+empty_query = None
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 
 @app.route('/')
@@ -42,7 +48,10 @@ def database_character_add():
 def assassin(id):
     assassin = db.fetch('SELECT * FROM Character WHERE CharacterID = ?', "one",
                         (id,))
-    return render_template('character.html', assassin=assassin)
+    if assassin == empty_query:
+        return render_template('404.html')
+    else:
+        return render_template('character.html', assassin=assassin)
 
 
 # Page for all assassins
@@ -63,15 +72,16 @@ def all_weapons():
 # Page for individual weapons
 @app.route('/weapon/<int:id>')
 def weapon(id):
-    # TODO make from conn =, to assassin =, a single function
     weapon = db.fetch('SELECT * FROM Weapon WHERE WeaponID = ?', "one", (id,))
-    return render_template('weapon.html', weapon=weapon)
+    if weapon == empty_query:
+        return render_template('404.html')
+    else:
+        return render_template('weapon.html', weapon=weapon)
 
 
 # Page for all Games
 @app.route('/all_games')
 def all_games():
-    # TODO make from conn =, to assassin =, a single function
     games = db.fetch('SELECT * FROM Game ORDER BY GameID;', "all")
     return render_template('all_games.html', games=games)
 
@@ -80,8 +90,12 @@ def all_games():
 @app.route('/game/<int:id>')
 def game(id):
     game = db.fetch("SELECT * FROM Game WHERE GameID = ?", "one", (id,))
-    return render_template('game.html', game=game)
+    if game == empty_query:
+        return render_template('404.html')
+    else:
+        return render_template('game.html', game=game)
 
 
 if __name__ == "__main__":
     app.run(debug=True)  # MUST BE FINAL LINE
+    
