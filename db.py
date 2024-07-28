@@ -2,7 +2,8 @@ import sqlite3
 
 database = "ACDB - Copy.db"  # CURRENTLY A TEST DATABASE
 
-def add_character(name, alias, birthdate, deathdate, gender, 
+
+def add_character(name, alias, birthdate, deathdate, gender,
                   affiliation, description, image, profileimage):
     conn = sqlite3.connect(database)
     cur = conn.cursor()
@@ -13,4 +14,17 @@ def add_character(name, alias, birthdate, deathdate, gender,
                  description, image, profileimage,))
     conn.commit()
     conn.close()
-       
+
+
+#  Function to choose between fetchone and fetchall query
+def fetch(query, fetchtype, id=None):
+    conn = sqlite3.connect('ACDB - Copy.db')  # TEST DB
+    cur = conn.cursor()
+    if fetchtype == "all":
+        cur.execute(query)
+        results = cur.fetchall()
+    elif fetchtype == "one":
+        cur.execute(query, id)
+        results = cur.fetchone()
+    conn.close()
+    return results
