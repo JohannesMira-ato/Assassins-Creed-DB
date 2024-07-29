@@ -1,4 +1,15 @@
 {%extends 'layout.html'%}
-
 {%block content%}
-{%endblock%}
+<div>
+    <h1 class="character-text">{{weapons[2]}}</h1>
+    <br>
+    <ul>
+        {% for weapon in weapons %}
+        <li>
+            {{weapon[3]}}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

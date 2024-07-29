@@ -72,11 +72,18 @@ def all_weapons():
 # Page for individual weapons
 @app.route('/weapon/<int:id>')
 def weapon(id):
-    weapon = db.fetch('SELECT * FROM Weapon WHERE WeaponID = ?', "one", (id,))
-    if weapon == empty_query:
+    weapons = db.fetch('''SELECT Weapon.WeaponID,
+                       Weapon.Name,
+                       Character.CharacterID,
+                       Character.Name
+                       FROM Weapon 
+                       JOIN CharacterWeapon ON Weapon.WeaponID = CharacterWeapon.WeaponID 
+                       JOIN Character ON CharacterWeapon.CharacterID = Character.CharacterID
+                       WHERE Weapon.WeaponID = ?;''', 'all', (id,))
+    if weapons == empty_query:
         return render_template('404.html')
     else:
-        return render_template('weapon.html', weapon=weapon)
+        return render_template('weapon.html', weapons=weapons)
 
 
 # Page for all Games
@@ -98,4 +105,3 @@ def game(id):
 
 if __name__ == "__main__":
     app.run(debug=True)  # MUST BE FINAL LINE
-    
