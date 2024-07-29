@@ -75,7 +75,8 @@ def weapon(id):
     weapons = db.fetch('''SELECT Weapon.WeaponID,
                        Weapon.Name,
                        Character.CharacterID,
-                       Character.Name
+                       Character.Name,
+                       Weapon.Description
                        FROM Weapon 
                        JOIN CharacterWeapon ON Weapon.WeaponID = CharacterWeapon.WeaponID 
                        JOIN Character ON CharacterWeapon.CharacterID = Character.CharacterID
