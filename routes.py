@@ -46,8 +46,8 @@ def database_character_add():
 # Page for individual assassins
 @app.route('/assassin/<int:id>')
 def assassin(id):
-    assassin = db.fetch('SELECT * FROM Character WHERE CharacterID = ?', "one",
-                        (id,))
+    assassin = db.fetch('SELECT * FROM Character WHERE CharacterID = ?',
+                        "one", (id,))
     if assassin == empty_query:
         return render_template('404.html')
     else:
@@ -97,7 +97,18 @@ def all_games():
 # Page for individual weapons
 @app.route('/game/<int:id>')
 def game(id):
-    game = db.fetch("SELECT * FROM Game WHERE GameID = ?", "one", (id,))
+    game = db.fetch('''SELECT 
+                        Game.GameID,
+                        Game.Title,
+                        Game.ReleaseDate,
+                        Game.Setting,
+                        Game.Image,
+                        Character.CharacterID,
+                        Character.Name
+                    FROM Game
+                        JOIN CharacterGame ON Game.GameID = CharacterGame.GameID
+                        JOIN Character ON CharacterGame.CharacterID = Character.CharacterID
+                    WHERE Game.GameID = ?;''', "all", (id,))
     if game == empty_query:
         return render_template('404.html')
     else:
