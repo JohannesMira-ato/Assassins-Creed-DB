@@ -57,7 +57,8 @@ def assassin(id):
 # Page for all assassins
 @app.route('/all_assassins')
 def all_assassins():
-    assassins = db.fetch('SELECT * FROM Character ORDER BY CharacterID;',
+    assassins = db.fetch('''SELECT CharacterID, Name, ProfileImage FROM
+                        Character WHERE Affiliation LIKE "%Assassin%";''',
                          "all")
     return render_template('all_characters.html', assassins=assassins)
 
@@ -90,7 +91,7 @@ def weapon(id):
 # Page for all Games
 @app.route('/all_games')
 def all_games():
-    games = db.fetch('SELECT * FROM Game ORDER BY GameID;', "all")
+    games = db.fetch('SELECT GameID, Title, Image FROM game;', "all")
     return render_template('all_games.html', games=games)
 
 
