@@ -55,7 +55,7 @@ def database():
     if 'username' in session:
         return render_template('database.html', username=session['username'])
     else:
-        return render_template('database.html')
+        return redirect("/login", code=302)
 
 
 # Page to route user to which table in database to add to

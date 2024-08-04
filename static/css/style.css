@@ -113,14 +113,6 @@ footer{
     left: 6.5%;
 }
 
-/* .all-container{
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 25px;
-    margin-top: 100px;
-} */
-
 .all-container{
     width: 325px;
     background-color: #2C2D2E;
@@ -140,4 +132,10 @@ footer{
 
 .all-container:hover{
     transform: translateY(-20px);
+}
+
+.login-container{
+    display: grid;
+    place-items: center;
+    color: #FFFFFF;
 }
