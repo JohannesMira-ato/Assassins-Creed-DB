@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, session
+import sqlite3
 import db
 
 app = Flask(__name__)
+app.secret_key = "SHOCEKR"
 empty_query = None
-
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -14,10 +15,47 @@ def page_not_found(e):
 def homepage():
     return render_template("home.html")
 
+@app.route('/register')
+def register():
+    username = request.args.get('username')
+    password = request.args.get('password')
+    conn = sqlite3.connect("Accounts.db")
+    cur = conn.cursor()
+    cur.execute(f"INSERT INTO UserInfo (Username, Password) values ('{username}', '{password}')")
+    conn.commit()
+    conn.close()
+    if username and password:
+        return redirect('/login', code=302)
+    else:
+        return render_template('register.html')
+
+
+@app.route('/login')
+def login():
+    username = request.args.get("username")
+    password = request.args.get("password")
+    conn = sqlite3.connect("Accounts.db")
+    cur = conn.cursor()
+    cur.execute(f"SELECT Username, Password FROM UserInfo WHERE Username = '{username}';")
+    user = cur.fetchone()
+    if user and password == user[1]:
+        session['username'] = user[0]
+        return redirect("/database", code=302)
+    return render_template("login.html")
+
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect("/login")
+
 
 @app.route('/database')
 def database():
-    return render_template('database.html')
+    if 'username' in session:
+        return render_template('database.html', username=session['username'])
+    else:
+        return render_template('database.html')
 
 
 # Page to route user to which table in database to add to

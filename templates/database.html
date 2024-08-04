@@ -1,7 +1,13 @@
 {% extends "layout.html" %}
 
 {%block content%}
-<div><a href="/database/add">Add</a></div>
-<div><a href="">Edit</a></div>
-<div><a href="">Delete</a></div>
+
+{% if username%}
+    <h1>Welcome {{username}}</h1>
+    <div><a href="/database/add">Add</a></div>
+    <div><a href="">Edit</a></div>
+    <div><a href="">Delete</a></div>
+{% else %}
+ <p>Please login to access the database</p>
+ {% endif %}
 {%endblock%}
