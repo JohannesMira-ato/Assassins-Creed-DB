@@ -1,12 +1,12 @@
 /* Reset Margin */
 *{
     margin: 0%;
-    font-family: 'Julius Sans One';
-    background-color: #2C2D2E;
 }
 
 body{
+    background-color: #2C2D2E;
     min-height: 100vh;
+    font-family: 'Julius Sans One';
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
@@ -137,5 +137,25 @@ footer{
 .login-container{
     display: grid;
     place-items: center;
+    /* align-content: center; */
+    position: relative;
+    top: 100px;
     color: #FFFFFF;
+    scale: 1.5;
+}
+
+.login-form{
+    font-family: Arial;
+}
+
+.login-square{
+    height: 200px;
+    width: auto;
+    padding: 15px;
+    border-radius: 5%;
+    background-color:#414141;
+}
+
+.login-container input{
+    width: 100%;
 }

@@ -1,16 +1,19 @@
 {% extends "layout.html"%}
 {% block content %}
 {% if error %}
-    <p>Error</p>
+<p>Error</p>
 {% endif %}
 <div class="login-container">
-    <h1>Login</h1>
-    <form>
-        <label>Username</label>
-        <input type="text" name="username" required> <br>
-        <label>Password</label>
-        <input type="text" name="password" required> <br>
-        <input type="submit" value="submit">
-    </form>
+    <div class="login-square">
+        <h1>Login</h1>
+        <div class="login-form">
+            <form>
+                <input type="text" name="username" required placeholder="Enter Username"></label> <br><br>
+                <input type="password" name="password" required placeholder="Enter Passowrd"><br><br>
+                <input type="submit" value="Submit  ">
+            </form>
+            <p>Dont have an account? <a href="/register">Register Here</a></p>
+        </div>
+    </div>
 </div>
 {% endblock %}
