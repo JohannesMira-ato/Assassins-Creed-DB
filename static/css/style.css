@@ -149,7 +149,7 @@ footer{
 }
 
 .login-square{
-    height: 200px;
+    height: 160px;
     width: auto;
     padding: 15px;
     border-radius: 5%;
@@ -158,4 +158,43 @@ footer{
 
 .login-container input{
     width: 100%;
+}
+
+#login-register:hover{
+    color: #858585;
+}
+
+#login-submit{
+    width: 100px;
+}
+
+.register-container{
+    display: grid;
+    place-items: center;
+    /* align-content: center; */
+    position: relative;
+    top: 100px;
+    color: #FFFFFF;
+    scale: 1.5;
+}
+
+.register-form{
+    font-family: Arial;
+    width: 280px;
+}
+
+.register-square{
+    height: 160px;
+    width: auto;
+    padding: 15px;
+    border-radius: 5%;
+    background-color:#414141;
+}
+
+.register-container input{
+    width: 100%;
+}
+
+#register-submit{
+    width: 100px;
 }

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, flash
 import sqlite3
 import db
 
@@ -15,6 +15,7 @@ def page_not_found(e):
 def homepage():
     return render_template("home.html")
 
+
 @app.route('/register')
 def register():
     username = request.args.get('username')
@@ -25,10 +26,12 @@ def register():
     conn.commit()
     conn.close()
     if username and password:
+        flash("Account Successfully Created!")
         return redirect('/login', code=302)
     else:
+        flash("Please fill out the fields correctly")
         return render_template('register.html')
-
+    
 
 @app.route('/login')
 def login():
@@ -41,7 +44,8 @@ def login():
     if user and password == user[1]:
         session['username'] = user[0]
         return redirect("/database", code=302)
-    return render_template("login.html")
+    else:
+        return render_template("login.html")
 
 
 @app.route('/logout')
