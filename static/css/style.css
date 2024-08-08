@@ -149,7 +149,6 @@ footer{
 }
 
 .login-square{
-    height: 160px;
     width: auto;
     padding: 15px;
     border-radius: 5%;
@@ -184,9 +183,7 @@ footer{
 }
 
 .register-square{
-    height: 160px;
-    width: auto;
-    padding: 15px;
+    padding: 1rem;
     border-radius: 5%;
     background-color:#414141;
 }

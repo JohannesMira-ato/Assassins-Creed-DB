@@ -8,6 +8,13 @@
         <h1>Login</h1>
         <div class="login-form">
             <form>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
                 <input type="text" name="username" required placeholder="Enter Username"></label> <br><br>
                 <input type="password" name="password" required placeholder="Enter Password"><br><br>
                 <input type="submit" value="Submit" id="login-submit">

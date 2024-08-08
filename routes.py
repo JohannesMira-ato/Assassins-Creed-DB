@@ -6,6 +6,7 @@ app = Flask(__name__)
 app.secret_key = "SHOCEKR"
 empty_query = None
 
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
@@ -20,18 +21,26 @@ def homepage():
 def register():
     username = request.args.get('username')
     password = request.args.get('password')
-    conn = sqlite3.connect("Accounts.db")
-    cur = conn.cursor()
-    cur.execute(f"INSERT INTO UserInfo (Username, Password) values ('{username}', '{password}')")
-    conn.commit()
-    conn.close()
-    if username and password:
-        flash("Account Successfully Created!")
-        return redirect('/login', code=302)
+    confirm_password = request.args.get("password-confirm")
+    if password == confirm_password:
+        if username and not password or password and not username:
+            flash("Please fill out the fields correctly")
+            return redirect("/register")
+        elif username and password:
+            conn = sqlite3.connect("Accounts.db")
+            cur = conn.cursor()
+            cur.execute(f"INSERT INTO UserInfo (Username, Password) \
+                    values ('{username}', '{password}')")
+            conn.commit()
+            conn.close()
+            flash("Account Successfully Created!")
+            return redirect('/login', code=302)
+        else:
+            return render_template('register.html')
     else:
-        flash("Please fill out the fields correctly")
-        return render_template('register.html')
-    
+        flash("Passwords do not match")
+        return redirect('/register')
+
 
 @app.route('/login')
 def login():
@@ -39,7 +48,10 @@ def login():
     password = request.args.get("password")
     conn = sqlite3.connect("Accounts.db")
     cur = conn.cursor()
-    cur.execute(f"SELECT Username, Password FROM UserInfo WHERE Username = '{username}';")
+    cur.execute(f"""
+        SELECT Username, Password
+        FROM UserInfo
+        WHERE Username = '{username}';""")
     user = cur.fetchone()
     if user and password == user[1]:
         session['username'] = user[0]
@@ -116,14 +128,14 @@ def all_weapons():
 @app.route('/weapon/<int:id>')
 def weapon(id):
     weapons = db.fetch('''SELECT Weapon.WeaponID,
-                       Weapon.Name,
-                       Character.CharacterID,
-                       Character.Name,
-                       Weapon.Description
-                       FROM Weapon 
-                       JOIN CharacterWeapon ON Weapon.WeaponID = CharacterWeapon.WeaponID 
-                       JOIN Character ON CharacterWeapon.CharacterID = Character.CharacterID
-                       WHERE Weapon.WeaponID = ?;''', 'all', (id,))
+        Weapon.Name,
+        Character.CharacterID,
+        Character.Name,
+        Weapon.Description
+        FROM Weapon
+        JOIN CharacterWeapon ON Weapon.WeaponID = CharacterWeapon.WeaponID
+        JOIN Character ON CharacterWeapon.CharacterID = Character.CharacterID
+        WHERE Weapon.WeaponID = ?;''', 'all', (id,))
     if weapons == empty_query:
         return render_template('404.html')
     else:
@@ -140,18 +152,18 @@ def all_games():
 # Page for individual weapons
 @app.route('/game/<int:id>')
 def game(id):
-    game = db.fetch('''SELECT 
-                        Game.GameID,
-                        Game.Title,
-                        Game.ReleaseDate,
-                        Game.Setting,
-                        Game.Image,
-                        Character.CharacterID,
-                        Character.Name
-                    FROM Game
-                        JOIN CharacterGame ON Game.GameID = CharacterGame.GameID
-                        JOIN Character ON CharacterGame.CharacterID = Character.CharacterID
-                    WHERE Game.GameID = ?;''', "all", (id,))
+    game = db.fetch('''SELECT
+            Game.GameID,
+            Game.Title,
+            Game.ReleaseDate,
+            Game.Setting,
+            Game.Image,
+            Character.CharacterID,
+            Character.Name
+        FROM Game
+            JOIN CharacterGame ON Game.GameID = CharacterGame.GameID
+            JOIN Character ON CharacterGame.CharacterID = Character.CharacterID
+        WHERE Game.GameID = ?;''', "all", (id,))
     if game == empty_query:
         return render_template('404.html')
     else:

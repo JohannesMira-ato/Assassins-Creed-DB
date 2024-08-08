@@ -5,9 +5,17 @@
     <div class="register-square">
         <h1>Register</h1>
         <div class="register-form">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
             <form action="/register">
-                <input type="text" name="username" id="username" placeholder="Enter Username" required><br><br>
-                <input type="text" name="password" id="password" placeholder="Enter Password"><br><br>
+                <input type="text" name="username" id="username" placeholder="Enter Username" ><br><br>
+                <input type="text" name="password" id="password" placeholder="Enter Password" ><br><br>
+                <input type="text" name="password-confirm" id="password" placeholder="Confirm Password" ><br><br>
                 <input type="submit" value="Register" id="register-submit">
             </form>
         </div>
