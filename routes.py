@@ -17,29 +17,29 @@ def homepage():
     return render_template("home.html")
 
 
-@app.route('/register')
+@app.route('/register', methods=["GET", "POST"])
 def register():
-    username = request.args.get('username')
-    password = request.args.get('password')
-    confirm_password = request.args.get("password-confirm")
-    if password == confirm_password:
-        if username and not password or password and not username:
-            flash("Please fill out the fields correctly")
-            return redirect("/register")
-        elif username and password:
-            conn = sqlite3.connect("Accounts.db")
-            cur = conn.cursor()
-            cur.execute(f"INSERT INTO UserInfo (Username, Password) \
-                    values ('{username}', '{password}')")
-            conn.commit()
-            conn.close()
-            flash("Account Successfully Created!")
-            return redirect('/login', code=302)
+    if request.method == "POST":
+        username = request.form.get('username')
+        password = request.form.get('password')
+        confirm_password = request.form.get("confirm_password")
+        if username and password and confirm_password:
+            if confirm_password == password:
+                conn = sqlite3.connect("Accounts.db")
+                cur = conn.cursor()
+                cur.execute(f"INSERT INTO UserInfo (Username, Password)\
+                        values ('{username}', '{password}')")
+                conn.commit()
+                conn.close()
+                flash("Account Successfully Created!")
+                return redirect('/login', code=302)
+            else:
+                flash("Passwords do not match")
+                return redirect('/register')
         else:
-            return render_template('register.html')
-    else:
-        flash("Passwords do not match")
-        return redirect('/register')
+            flash("Please fill out the fields correctly")
+            return redirect('/register')
+    return render_template('register.html')
 
 
 @app.route('/login')

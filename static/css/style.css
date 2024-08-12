@@ -179,7 +179,8 @@ footer{
 
 .register-form{
     font-family: Arial;
-    width: 280px;
+    /* width: 280px; */
+    width: 17rem;
 }
 
 .register-square{
@@ -194,4 +195,28 @@ footer{
 
 #register-submit{
     width: 100px;
+}
+
+.password-wrap{
+    position: relative;
+}
+
+#show_password{
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    position: absolute;
+    top: 26.5%;
+    left: 15.5rem;
+    transform: translateY(-50%);
+    cursor: pointer;
+    width: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+#show_password img{
+    width: 150%;
+    height: auto;
 }

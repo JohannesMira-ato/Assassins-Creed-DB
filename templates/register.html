@@ -12,10 +12,40 @@
             {% endfor %}
             {% endif %}
             {% endwith %}
-            <form action="/register">
+            <form action="/register" method="POST">
                 <input type="text" name="username" id="username" placeholder="Enter Username" ><br><br>
-                <input type="text" name="password" id="password" placeholder="Enter Password" ><br><br>
-                <input type="text" name="password-confirm" id="password" placeholder="Confirm Password" ><br><br>
+
+
+                <div class="password-wrap">
+                    <input type="password" name="password" id="password" placeholder="Enter Password"><br><br>
+                    <button type="button" id="show_password">
+                        <img src="/static/images/eye_closed.svg" alt="Show Password">
+                    </button>
+                </div>
+
+
+                <div class="password-wrap">
+                    <input type="password" name="confirm_password" id="confirm_password" placeholder="Enter Password"><br><br>
+                    <button type="button" id="show_password">
+                        <img src="/static/images/eye_closed.svg" alt="Show Password">
+                    </button>
+
+                    <script>
+                        // Show password button from https://www.youtube.com/watch?v=sVBRJ-0AzXw
+                        const show_pw_btn = document.querySelector('#show_password')
+                        const show_pw_icon = show_pw_btn.querySelector('img')
+                        const pw_input = document.querySelector('#password')
+                        
+                        show_pw_btn.addEventListener('click', () => {
+                            pw_input.type = pw_input.type === 'password' 
+                                ? 'text' 
+                                : 'password'
+                        
+                            show_pw_icon.src = show_pw_icon.src.includes('open') 
+                                ? '/static/images/eye_closed.svg' 
+                                : '/static/images/eye_open.svg'
+                        })</script>
+
                 <input type="submit" value="Register" id="register-submit">
             </form>
         </div>
