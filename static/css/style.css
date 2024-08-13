@@ -88,16 +88,18 @@ footer{
     left: 35px;
 }
 /* Grid for individual assassin page displaying assassin*/
-.character-hero{
+.assassin-hero{
     display: grid;
-    grid-template-columns: 2fr 2fr .1fr;
+    grid-template-columns: auto auto;
 }
 
-.character-img{
-    padding: 50px;
+.assassin-img{
+    position: relative;
+    left: 8rem;
+    filter: drop-shadow(0 0 5px #ffffff);
 }
 
-.character-text{
+.assassin-text{
     color: #FFFFFF;
     font-size: 45px;
     position: relative;

@@ -18,7 +18,7 @@ def add_character(name, alias, birthdate, deathdate, gender,
 
 #  Function to choose between fetchone and fetchall query
 def fetch(query, fetchtype, parameter=None):
-    conn = sqlite3.connect("ACDB - Copy.db")  # TEST DB
+    conn = sqlite3.connect("ACDB.db")  # TEST DB
     cur = conn.cursor()
     if fetchtype == "all":
         if parameter is None:

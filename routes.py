@@ -123,7 +123,7 @@ def assassin(id):
     if assassin == empty_query:
         return render_template('404.html')
     else:
-        return render_template('character.html', assassin=assassin)
+        return render_template('assassin.html', assassin=assassin)
 
 
 # Page for all assassins
@@ -132,7 +132,7 @@ def all_assassins():
     assassins = db.fetch('''SELECT CharacterID, Name, ProfileImage FROM
                         Character WHERE Affiliation LIKE "%Assassin%";''',
                          "all")
-    return render_template('all_characters.html', assassins=assassins)
+    return render_template('all_assassins.html', assassins=assassins)
 
 
 # Page for all Weapons
