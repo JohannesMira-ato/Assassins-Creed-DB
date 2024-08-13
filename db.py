@@ -29,6 +29,6 @@ def fetch(query, fetchtype, parameter=None):
             results = cur.fetchall()
     elif fetchtype == "one":
         cur.execute(query, parameter)
-        results = cur.fetchone() 
+        results = cur.fetchone()
     conn.close()
     return results

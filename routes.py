@@ -24,18 +24,18 @@ def register():
         username = request.form.get('username')
         password = request.form.get('password')
         confirm_password = request.form.get("confirm_password")
-        # Setting up database for username check and insert
+        # Setting up database for username check and insert.
         conn = sqlite3.connect('Accounts.db')
         cur = conn.cursor()
         # Looking for same username in databasee
-        cur.execute(f"""SELECT Username FROM UserInfo 
+        cur.execute(f"""SELECT Username FROM UserInfo
                     WHERE Username = '{username}';""")
         match = cur.fetchone()
         # If username in database
         if match:
             flash("Username already exists")
             return redirect('/register')
-        # Else username not in database
+        # Else unique username, so continue
         else:
             # If all 3 input fields have been filled out
             if username and password and confirm_password:
@@ -56,22 +56,26 @@ def register():
     return render_template('register.html')
 
 
-@app.route('/login')
+@app.route('/login', methods=["GET", "POST"])
 def login():
-    username = request.args.get("username")
-    password = request.args.get("password")
-    conn = sqlite3.connect("Accounts.db")
-    cur = conn.cursor()
-    cur.execute(f"""
-        SELECT Username, Password
-        FROM UserInfo
-        WHERE Username = '{username}';""")
-    user = cur.fetchone()
-    if user and password == user[1]:
-        session['username'] = user[0]
-        return redirect("/database", code=302)
-    else:
-        return render_template("login.html")
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        conn = sqlite3.connect("Accounts.db")
+        cur = conn.cursor()
+        cur.execute(f"""
+            SELECT Username, Password
+            FROM UserInfo
+            WHERE Username = '{username}';""")
+        user = cur.fetchone()
+        if user and password == user[1]:
+            session['username'] = user[0]
+            return redirect("/database", code=302)
+        else:
+            print("works")
+            flash("Invalid Login")
+            return redirect('/login')
+    return render_template('login.html') 
 
 
 @app.route('/logout')

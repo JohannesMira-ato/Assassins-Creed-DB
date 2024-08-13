@@ -7,7 +7,7 @@
     <div class="login-square">
         <h1>Login</h1>
         <div class="login-form">
-            <form>
+            <form action="/login" method="POST">
                 {% with messages = get_flashed_messages() %}
                 {% if messages %}
                 {% for message in messages %}
@@ -40,7 +40,7 @@
                 
                 <input type="submit" value="Login" id="login-submit">
             </form>
-
+            <br>
             <p>Dont have an account? <a href="/register" id="login-register">Register Here</a></p>
         </div>
     </div>
