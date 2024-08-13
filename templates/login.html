@@ -15,10 +15,32 @@
                 {% endfor %}
                 {% endif %}
                 {% endwith %}
-                <input type="text" name="username" required placeholder="Enter Username"></label> <br><br>
-                <input type="password" name="password" required placeholder="Enter Password"><br><br>
-                <input type="submit" value="Submit" id="login-submit">
+                <input type="text" name="username" placeholder="Enter Username"></label> <br><br>
+                <div class="password-wrap">
+                    <input type="password" name="password" id="login-password" placeholder="Enter Password"><br><br>
+                    <button id="show_password" type="button">
+                        <img src="/static/images/eye_closed.svg" alt="Show Password">                    
+                    </button>
+                    <script>
+                        // Show password button from https://www.youtube.com/watch?v=sVBRJ-0AzXw
+                        const show_pw_btn = document.querySelector('#show_password')
+                        const show_pw_icon = show_pw_btn.querySelector('img')
+                        const pw_input = document.querySelector('#login-password')
+                        
+                        show_pw_btn.addEventListener('click', () => {
+                            pw_input.type = pw_input.type === 'password' 
+                                ? 'text' 
+                                : 'password'
+                        
+                            show_pw_icon.src = show_pw_icon.src.includes('open') 
+                                ? '/static/images/eye_closed.svg' 
+                                : '/static/images/eye_open.svg'
+                        })</script>
+                </div>
+                
+                <input type="submit" value="Login" id="login-submit">
             </form>
+
             <p>Dont have an account? <a href="/register" id="login-register">Register Here</a></p>
         </div>
     </div>

@@ -20,25 +20,39 @@ def homepage():
 @app.route('/register', methods=["GET", "POST"])
 def register():
     if request.method == "POST":
+        # All user input
         username = request.form.get('username')
         password = request.form.get('password')
         confirm_password = request.form.get("confirm_password")
-        if username and password and confirm_password:
-            if confirm_password == password:
-                conn = sqlite3.connect("Accounts.db")
-                cur = conn.cursor()
-                cur.execute(f"INSERT INTO UserInfo (Username, Password)\
-                        values ('{username}', '{password}')")
-                conn.commit()
-                conn.close()
-                flash("Account Successfully Created!")
-                return redirect('/login', code=302)
-            else:
-                flash("Passwords do not match")
-                return redirect('/register')
-        else:
-            flash("Please fill out the fields correctly")
+        # Setting up database for username check and insert
+        conn = sqlite3.connect('Accounts.db')
+        cur = conn.cursor()
+        # Looking for same username in databasee
+        cur.execute(f"""SELECT Username FROM UserInfo 
+                    WHERE Username = '{username}';""")
+        match = cur.fetchone()
+        # If username in database
+        if match:
+            flash("Username already exists")
             return redirect('/register')
+        # Else username not in database
+        else:
+            # If all 3 input fields have been filled out
+            if username and password and confirm_password:
+                # If passwords match
+                if confirm_password == password:
+                    cur.execute(f"INSERT INTO UserInfo (Username, Password)\
+                            values ('{username}', '{password}')")
+                    conn.commit()
+                    conn.close()
+                    flash("Account Successfully Created!")
+                    return redirect('/login', code=302)
+                else:
+                    flash("Passwords do not match")
+                    return redirect('/register')
+            else:
+                flash("Please fill out the fields correctly")
+                return redirect('/register')
     return render_template('register.html')
 
 

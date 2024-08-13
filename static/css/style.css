@@ -220,3 +220,23 @@ footer{
     width: 150%;
     height: auto;
 }
+
+#show_password2{
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    position: absolute;
+    top: 18%;
+    left: 15.5rem;
+    transform: translateY(-50%);
+    cursor: pointer;
+    width: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+#show_password2 img{
+    width: 150%;
+    height: auto;
+}
