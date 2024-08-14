@@ -4,14 +4,33 @@
     <div class="assassin-img">
         <img src="/static/images/{{assassin[9]}}" alt="" width="800" height="auto">
     </div>
-    <div class="assassin-text">
-        <p>{{assassin[1]}}</p>
-        {% if assassin[2] is not none %}
-        <p>"{{assassin[2]}}"</p>
-        {% endif %}
-        <!-- {% for info in assassin%}
-            <p>{{info[2]}}</p>
-        {% endfor %} -->
+    <div>
+        <div class="assassin-text">
+            <p>{{assassin[1]}}</p>
+            {% if assassin[2] is not none %}
+            <p>"{{assassin[2]}}"</p>
+            {% endif %}
+        </div>
+        <button type="button" class="assassin-collapsible">ssss</button>
+        <div class="acollapsible-content">
+            content test
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("assassin-collapsible");
+            var i;
+            
+            for (i = 0; i < coll.length; i++) {
+              coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight){
+                  content.style.maxHeight = null;
+                } else {
+                  content.style.maxHeight = content.scrollHeight + "px";
+                } 
+              });
+            }
+            </script>
     </div>
 </div>
 

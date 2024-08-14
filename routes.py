@@ -23,37 +23,29 @@ def register():
         # All user input
         username = request.form.get('username')
         password = request.form.get('password')
-        confirm_password = request.form.get("confirm_password")
-        # Setting up database for username check and insert.
-        conn = sqlite3.connect('Accounts.db')
+        confirm_password = request.form.get('confirm_password')
+        # Database setup
+        conn = sqlite3.connect("Accounts.db")
         cur = conn.cursor()
-        # Looking for same username in databasee
         cur.execute(f"""SELECT Username FROM UserInfo
                     WHERE Username = '{username}';""")
         match = cur.fetchone()
-        # If username in database
         if match:
             flash("Username already exists")
             return redirect('/register')
-        # Else unique username, so continue
-        else:
-            # If all 3 input fields have been filled out
-            if username and password and confirm_password:
-                # If passwords match
-                if confirm_password == password:
-                    cur.execute(f"INSERT INTO UserInfo (Username, Password)\
-                            values ('{username}', '{password}')")
-                    conn.commit()
-                    conn.close()
-                    flash("Account Successfully Created!")
-                    return redirect('/login', code=302)
-                else:
-                    flash("Passwords do not match")
-                    return redirect('/register')
-            else:
-                flash("Please fill out the fields correctly")
-                return redirect('/register')
-    return render_template('register.html')
+        if password != confirm_password:
+            flash("Passwords do not match")
+            return redirect('/register')
+        if not username and not password and not confirm_password:
+            flash("Please fill out all fields correctly")
+            return redirect('/register')
+        cur.execute(f"INSERT INTO UserInfo (Username, Password)\
+                     values ('{username}', '{password}')")
+        conn.commit()
+        conn.close()
+        flash("Account Successfully Created!")
+        return redirect('/login', code=302)
+    return render_template("register.html")
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -75,7 +67,7 @@ def login():
             print("works")
             flash("Invalid Login")
             return redirect('/login')
-    return render_template('login.html') 
+    return render_template('login.html')
 
 
 @app.route('/logout')
@@ -145,7 +137,7 @@ def all_weapons():
 # Page for individual weapons
 @app.route('/weapon/<int:id>')
 def weapon(id):
-    weapons = db.fetch('''SELECT Weapon.WeaponID,
+    weapon = db.fetch('''SELECT Weapon.WeaponID,
         Weapon.Name,
         Character.CharacterID,
         Character.Name,
@@ -154,10 +146,10 @@ def weapon(id):
         JOIN CharacterWeapon ON Weapon.WeaponID = CharacterWeapon.WeaponID
         JOIN Character ON CharacterWeapon.CharacterID = Character.CharacterID
         WHERE Weapon.WeaponID = ?;''', 'all', (id,))
-    if weapons == empty_query:
+    if weapon == empty_query:
         return render_template('404.html')
     else:
-        return render_template('weapon.html', weapons=weapons)
+        return render_template('weapon.html', weapon=weapon)
 
 
 # Page for all Games

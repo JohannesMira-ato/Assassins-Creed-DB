@@ -1,11 +1,11 @@
 {%extends 'layout.html'%}
 {%block content%}
 <div>
-    <h1 class="character-text">{{weapons[0][1]}}</h1>
-    <h2 class="character-text">{{weapons[0][4]}}</h2>
+    <h1 class="character-text">{{weapon[0][1]}}</h1>
+    <h2 class="character-text">{{weapon[0][4]}}</h2>
     <br>
     <ul>
-        {% for weapon in weapons %}
+        {% for weapon in weapon %}
         <li>
             {{weapon[3]}}
         </li>
