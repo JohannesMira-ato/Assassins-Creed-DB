@@ -2,7 +2,7 @@
 {%block content%}
 <div class="game-hero">
     <div class="individual-img">
-        <img src="/static/images/{{game[0][4]}}" alt="{game[4]}" class="character-img" height="900">
+        <img src="/static/images/{{game[0][4]}}" alt="{game[4]}" class="character-img" height="800">
     </div>
     <div>
         <h1 class="assassin-text">{{game[0][1]}}</h1>
@@ -20,7 +20,9 @@
             <div class="game-collapsible-content">
                 <br>
                 {% for assassins in game%}
-                <h3>{{assassins[6]}}</h3> <br>
+                <ul>
+                  <li><h1>{{assassins[6]}}</h1></li> <br>
+                </ul>
                 {% endfor %}
             </div>
         </div>

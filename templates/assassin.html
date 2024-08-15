@@ -6,18 +6,20 @@
   </div>
   <div class="assassin-information">
     <div class="assassin-text">
-      <p>{{assassin[1]}}</p>
+      <h1>{{assassin[1]}}</h1>
       {% if assassin[2] is not none %}
-      <p>"{{assassin[2]}}"</p>
+      <h1>"{{assassin[2]}}"</h1>
       {% endif %}
     </div>
+
+    
     <div class="collapsible-wrapper">
       <button class="assassin-collapsible">Expand For More Information</button>
       <div class="acollapsible-content"><br>
-        <p>{{assassin[7]}}</p> <br>
-        <p>Birthdate: {{assassin[3]}}</p><br>
-        <p>Deathdate: {{assassin[4]}}</p><br>
-        <p>Gender: {{assassin[5]}}</p> <br>
+        <h2>{{assassin[7]}}</h2> <br>
+        <h2>Birthdate: {{assassin[3]}}</h2><br>
+        <h2>Deathdate: {{assassin[4]}}</h2><br>
+        <h2>Gender: {{assassin[5]}}</h2> <br>
       </div>
     </div>
     <script>

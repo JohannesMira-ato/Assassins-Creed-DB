@@ -30,14 +30,14 @@ def register():
         cur.execute(f"""SELECT Username FROM UserInfo
                     WHERE Username = '{username}';""")
         match = cur.fetchone()
+        if not username or not password or not confirm_password:
+            flash("Please fill out all fields correctly")
+            return redirect('/register')
         if match:
             flash("Username already exists")
             return redirect('/register')
         if password != confirm_password:
             flash("Passwords do not match")
-            return redirect('/register')
-        if not username and not password and not confirm_password:
-            flash("Please fill out all fields correctly")
             return redirect('/register')
         cur.execute(f"INSERT INTO UserInfo (Username, Password)\
                      values ('{username}', '{password}')")

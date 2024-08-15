@@ -1,16 +1,50 @@
 {%extends 'layout.html'%}
 {%block content%}
-<div>
-    <h1 class="character-text">{{weapon[0][1]}}</h1>
-    <h2 class="character-text">{{weapon[0][4]}}</h2>
-    <br>
-    <ul>
-        {% for weapon in weapon %}
-        <li>
-            {{weapon[3]}}
-        </li>
-        {% endfor %}
-    </ul>
+<div class="game-hero">
+    <div class="individual-img">
+        <img src="/static/images/placeholder.png" height="700">
+    </div>
+    <div>
+        <div class="weapon-text">
+            <h1>{{weapon[0][1]}}</h1>
+            <br>
+        </div>
+        <div class="collapsible-wrapper">
+            <button class="weapon-collapsible">Description</button>
+            <div class="weapon-collapsible-content">
+                <br>
+                <h1>{{weapon[0][4]}}</h1><br>
+            </div>
+        </div>
+        <div class="collapsible-wrapper">
+            <button class="weapon-collapsible">Users</button>
+            <div class="weapon-collapsible-content">
+                <ul>
+                    {% for weapon in weapon %}
+                    <li>
+                        <h1>{{weapon[3]}}</h1><br>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <script>
+                    var coll = document.getElementsByClassName("weapon-collapsible");
+                    var i;
+              
+                    for (i = 0; i < coll.length; i++) {
+                      coll[i].addEventListener("click", function () {
+                        this.classList.toggle("active");
+                        var content = this.nextElementSibling;
+                        if (content.style.maxHeight) {
+                          content.style.maxHeight = null;
+                        } else {
+                          content.style.maxHeight = content.scrollHeight + "px";
+                        }
+                      });
+                    }
+                  </script>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
