@@ -1,12 +1,46 @@
 {%extends 'layout.html'%}
 {%block content%}
-<div class="character-hero">
-    <div><img src="/static/images/{{game[0][4]}}" alt="{game[4]}" class="character-img" height="1100"></div>
+<div class="game-hero">
+    <div class="individual-img">
+        <img src="/static/images/{{game[0][4]}}" alt="{game[4]}" class="character-img" height="900">
+    </div>
     <div>
-        <h1 class="character-text">{{game[0][1]}}</h1>
-        {% for assassins in game%}
-        <h3>{{assassins[6]}}</h3>
-        {% endfor %}
+        <h1 class="assassin-text">{{game[0][1]}}</h1>
+        <div class="collapsible-wrapper">
+            <button class="game-collapsible">Description</button>
+            <div class="game-collapsible-content">
+                <br>
+                <h1>{{game[0][3]}}</h1>
+                <br>
+            </div>
+        </div>
+
+        <div class="collapsible-wrapper">
+            <button class="game-collapsible">Characters</button>
+            <div class="game-collapsible-content">
+                <br>
+                {% for assassins in game%}
+                <h3>{{assassins[6]}}</h3> <br>
+                {% endfor %}
+            </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("game-collapsible");
+            var i;
+      
+            for (i = 0; i < coll.length; i++) {
+              coll[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                  content.style.maxHeight = null;
+                } else {
+                  content.style.maxHeight = content.scrollHeight + "px";
+                }
+              });
+            }
+          </script>
+
     </div>
 </div>
 

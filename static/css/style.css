@@ -94,7 +94,7 @@ footer{
     grid-template-columns: auto auto;
 }
 
-.assassin-img{
+.individual-img{
     position: relative;
     left: 8rem;
     filter: drop-shadow(0 0 5px #ffffff);
@@ -118,13 +118,14 @@ footer{
     cursor: pointer;
     padding: 15px;
     width: 536px;
+    /* If have time, experiment with different sizes to fit different resolutions */
     border: none;
     text-align: left;
     outline: none;
     font-size: 15px;
 }
 
-.assassin-collapsible-wrapper{
+.collapsible-wrapper{
     display: grid;
     place-content: center;
 }
@@ -140,10 +141,6 @@ footer{
     margin-left: 5px;
 }
 
-.active:after {
-    content: "\2212";
-}
-
 .acollapsible-content{
     padding: 0 18px;
     width: 500px;
@@ -155,6 +152,48 @@ footer{
     font-size: large;
     place-content: center;
 }
+
+.game-collapsible{
+    position: relative;
+    background-color: #494848;
+    color: #FFFFFF;
+    cursor: pointer;
+    padding: 15px;
+    width: 800px;
+    /* If have time, experiment with different sizes to fit different resolutions */
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+}
+
+.game-collapsible-content{
+    padding: 0 18px;
+    width: 764px;
+    max-height: 0;
+    color: white;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: rgb(68, 68, 68);
+    font-size: small;
+    place-content: center;
+}
+
+.active, .game-collapsible:hover{
+    background-color: #494848;
+}
+
+.game-collapsible:after{
+    content: '\002B';
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2212";
+}
+
 
 .all-grid{
     display: grid;
@@ -291,4 +330,9 @@ footer{
 #show_password2 img{
     width: 150%;
     height: auto;
+}
+
+.game-hero{
+    display: grid;
+    grid-template-columns: auto auto;
 }

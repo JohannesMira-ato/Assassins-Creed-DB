@@ -1,7 +1,7 @@
 {%extends 'layout.html'%}
 {%block content%}
 <div class="assassin-hero">
-  <div class="assassin-img">
+  <div class="individual-img">
     <img src="/static/images/{{assassin[9]}}" alt="" width="950" height="auto">
   </div>
   <div class="assassin-information">
@@ -11,8 +11,8 @@
       <p>"{{assassin[2]}}"</p>
       {% endif %}
     </div>
-    <div class="assassin-collapsible-wrapper">
-      <button class="assassin-collapsible">Expand</button>
+    <div class="collapsible-wrapper">
+      <button class="assassin-collapsible">Expand For More Information</button>
       <div class="acollapsible-content"><br>
         <p>{{assassin[7]}}</p> <br>
         <p>Birthdate: {{assassin[3]}}</p><br>

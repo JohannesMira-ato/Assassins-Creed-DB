@@ -166,7 +166,7 @@ def game(id):
             Game.GameID,
             Game.Title,
             Game.ReleaseDate,
-            Game.Setting,
+            Game.Description,
             Game.Image,
             Character.CharacterID,
             Character.Name
