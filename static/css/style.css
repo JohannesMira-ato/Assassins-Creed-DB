@@ -106,12 +106,13 @@ footer{
     font-size: 45px;
     padding: 1rem;
     position: relative;
-    right: 10rem;
+    right: 5    rem;
     text-align: center;
 }
 
 
 .assassin-collapsible{
+    position: relative;
     background-color: #494848;
     color: #FFFFFF;
     cursor: pointer;
@@ -121,6 +122,11 @@ footer{
     text-align: left;
     outline: none;
     font-size: 15px;
+}
+
+.assassin-collapsible-wrapper{
+    display: grid;
+    place-content: center;
 }
 
 .active, .assassin-collapsible:hover{
@@ -147,6 +153,7 @@ footer{
     transition: max-height 0.2s ease-out;
     background-color: rgb(68, 68, 68);
     font-size: large;
+    place-content: center;
 }
 
 .all-grid{

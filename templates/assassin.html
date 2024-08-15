@@ -1,41 +1,42 @@
 {%extends 'layout.html'%}
 {%block content%}
 <div class="assassin-hero">
-    <div class="assassin-img">
-        <img src="/static/images/{{assassin[9]}}" alt="" width="950" height="auto">
+  <div class="assassin-img">
+    <img src="/static/images/{{assassin[9]}}" alt="" width="950" height="auto">
+  </div>
+  <div class="assassin-information">
+    <div class="assassin-text">
+      <p>{{assassin[1]}}</p>
+      {% if assassin[2] is not none %}
+      <p>"{{assassin[2]}}"</p>
+      {% endif %}
     </div>
-    <div class="assassin-information">
-        <div class="assassin-text">
-            <p>{{assassin[1]}}</p>
-            {% if assassin[2] is not none %}
-            <p>"{{assassin[2]}}"</p>
-            {% endif %}
-        </div>
-        <button class="assassin-collapsible">Expand</button>
-        <div class="acollapsible-content"><br>
-          <p>{{assassin[7]}}</p> <br>
-          <p>Birthdate: {{assassin[3]}}</p><br>
-          <p>Deathdate: {{assassin[4]}}</p><br>
-          <p>Gender: {{assassin[5]}}</p> <br>
+    <div class="assassin-collapsible-wrapper">
+      <button class="assassin-collapsible">Expand</button>
+      <div class="acollapsible-content"><br>
+        <p>{{assassin[7]}}</p> <br>
+        <p>Birthdate: {{assassin[3]}}</p><br>
+        <p>Deathdate: {{assassin[4]}}</p><br>
+        <p>Gender: {{assassin[5]}}</p> <br>
+      </div>
+    </div>
+    <script>
+      var coll = document.getElementsByClassName("assassin-collapsible");
+      var i;
 
-        </div>
-        <script>
-            var coll = document.getElementsByClassName("assassin-collapsible");
-            var i;
-            
-            for (i = 0; i < coll.length; i++) {
-              coll[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.maxHeight){
-                  content.style.maxHeight = null;
-                } else {
-                  content.style.maxHeight = content.scrollHeight + "px";
-                } 
-              });
-            }
-            </script>
-    </div>
+      for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+          this.classList.toggle("active");
+          var content = this.nextElementSibling;
+          if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+          } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+          }
+        });
+      }
+    </script>
+  </div>
 </div>
 
 {%endblock%}
