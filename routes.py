@@ -4,7 +4,6 @@ import db
 
 app = Flask(__name__)
 app.secret_key = "SHOCEKR"
-empty_query = None
 
 
 @app.errorhandler(404)
@@ -64,7 +63,6 @@ def login():
             session['username'] = user[0]
             return redirect("/database", code=302)
         else:
-            print("works")
             flash("Invalid Login")
             return redirect('/login')
     return render_template('login.html')
@@ -100,10 +98,9 @@ def database_character_add():
     gender = (request.args.get("character-gender"))
     affiliation = (request.args.get("character-affiliation"))
     description = (request.args.get("character-description"))
-    image = (request.args.get("character-image"))
     profile_image = (request.args.get("character-profileimage"))
     db.add_character(name, alias, birthdate, deathdate, gender,
-                     affiliation, description, image, profile_image)
+                     affiliation, description, profile_image)
     return render_template("database_character_add.html")
 
 
@@ -112,7 +109,7 @@ def database_character_add():
 def assassin(id):
     assassin = db.fetch('SELECT * FROM Character WHERE CharacterID = ?',
                         "one", (id,))
-    if assassin == empty_query:
+    if not assassin:
         return render_template('404.html')
     else:
         return render_template('assassin.html', assassin=assassin)
@@ -146,7 +143,7 @@ def weapon(id):
         JOIN CharacterWeapon ON Weapon.WeaponID = CharacterWeapon.WeaponID
         JOIN Character ON CharacterWeapon.CharacterID = Character.CharacterID
         WHERE Weapon.WeaponID = ?;''', 'all', (id,))
-    if weapon == empty_query:
+    if not weapon:
         return render_template('404.html')
     else:
         return render_template('weapon.html', weapon=weapon)
@@ -174,7 +171,7 @@ def game(id):
             JOIN CharacterGame ON Game.GameID = CharacterGame.GameID
             JOIN Character ON CharacterGame.CharacterID = Character.CharacterID
         WHERE Game.GameID = ?;''', "all", (id,))
-    if game == empty_query:
+    if not game:
         return render_template('404.html')
     else:
         return render_template('game.html', game=game)

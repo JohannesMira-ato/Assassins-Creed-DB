@@ -4,14 +4,14 @@ database = "ACDB - Copy.db"  # CURRENTLY A TEST DATABASE
 
 
 def add_character(name, alias, birthdate, deathdate, gender,
-                  affiliation, description, image, profileimage):
+                  affiliation, description, profileimage):
     conn = sqlite3.connect(database)
     cur = conn.cursor()
     cur.execute("""INSERT INTO Character (name, alias, birthdate, deathdate,
-                gender, affiliation, description, image, profileimage)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);""",
+                gender, affiliation, description, profileimage)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?);""",
                 (name, alias, birthdate, deathdate, gender, affiliation,
-                 description, image, profileimage,))
+                 description, profileimage,))
     conn.commit()
     conn.close()
 

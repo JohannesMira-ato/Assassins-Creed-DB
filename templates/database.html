@@ -1,17 +1,12 @@
 {% extends "layout.html" %}
 
 {%block content%}
-
-{% if username%}
-    <h1>Welcome {{username}}</h1>
-    <div>
-        <div><a href="/database/add">Add</a></div>
-        <div><a href="">Edit</a></div>
-        <div><a href="">Delete</a></div>
-        <div><a href="/logout">Logout</a></div>
-    </div>
-    {% else %}
-    <p>Please <a href="/login">login</a> to access the database</p>
- <p>Don't have an account? <a href="/register">Register</a></p>
- {% endif %}
+<div class="database-hero">
+    <h1>Welcome {{username}}! <br> What would you like to do?</h1>
+</div>
+<div class="database-content">
+    <div><a href="/database/add">Add to database</a></div>
+    <div><a href="">Edit database</a></div>
+    <div><a href="">Delete from database</a></div>
+</div>
 {%endblock%}

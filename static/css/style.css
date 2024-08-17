@@ -383,3 +383,34 @@ footer{
     height: auto;
 }
 
+.database-hero{
+    display: grid;
+    color: white;
+    text-align: center;
+    place-content: center;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.database-content{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    place-items: center;
+}
+
+.add-square{
+    padding: 1rem;
+    border-radius: 5%;
+    background-color: #FFFFFF;
+}
+
+.add-container{
+    display: grid;
+    place-content: center;
+}
+
+.add-form-container label{
+    display: inline-block;
+    width: 200px;
+}

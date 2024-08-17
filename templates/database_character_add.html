@@ -1,24 +1,28 @@
-{% extends 'layout.html'%}
-{% block content%} 
-<form>
-    <label>Character Name</label>
-    <input type="text" name="character-name"> <br>
-    <label>Character Alias</label>
-    <input type="text" name="character-alias"> <br>
-    <label>Character Birthdate</label>
-    <input type="text" name="character-birthdate"><br>
-    <label>Character Deathdate</label>
-    <input type="text" name="character-deathdate"><br>
-    <label>Character Gender</label>
-    <input type="text" name="character-gender"><br>
-    <label>Character Affiliation</label>
-    <input type="text" name="character-affiliation"><br>
-    <label>Character Description</label>
-    <input type="text" name="character-description"><br>
-    <label>Character Image</label>
-    <input type="text" name="character-image"><br>
-    <label>Character ProfileImage</label>
-    <input type="text" name="character-profileimage"><br>
-    <input type="submit" value="Submit">
-</form>
+{% extends 'layout.html'%} {% block content%}
+<h1>Add character to database</h1>
+<div class="add-container">
+  <div class="add-square">
+    <div class="add-form-container">
+      <form action="/database/add/character" method="POST" enctype="multipart/form-data">
+        <label>Name</label>
+        <input type="text" name="character-name"/><br/>
+        <label>Alias</label>
+        <input type="text" name="character-alias"/><br/>
+        <label>Birthdate</label>
+        <input type="text" name="character-birthdate"/><br/>
+        <label>Deathdate</label>
+        <input type="text" name="character-deathdate"/><br/>
+        <label>Gender</label>
+        <input type="text" name="character-gender"/><br/>
+        <label>Affiliation</label>
+        <input type="text" name="character-affiliation"/><br/>
+        <label>Description</label>
+        <input type="text" name="character-description"/><br/>
+        <label for="img">Image</label>
+        <input type="file" name="character-image"><br/>
+        <input type="submit" accept=".png" value="Submit"/>
+      </form>
+    </div>
+  </div>
+</div>
 {%endblock%}
