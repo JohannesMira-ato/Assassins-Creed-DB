@@ -18,7 +18,7 @@ def add_character(name, alias, birthdate, deathdate, gender,
 
 #  Function to choose between fetchone and fetchall query
 def fetch(query, fetchtype, parameter=None):
-    conn = sqlite3.connect("ACDB.db")  # TEST DB
+    conn = sqlite3.connect(database)  # TEST DB
     cur = conn.cursor()
     if fetchtype == "all":
         if parameter is None:
@@ -32,3 +32,14 @@ def fetch(query, fetchtype, parameter=None):
         results = cur.fetchone()
     conn.close()
     return results
+
+
+def delete_character(CharacterID):
+    conn = sqlite3.connect(database)
+    cur = conn.cursor()
+    cur.execute("DELETE FROM Character WHERE CharacterID =?", (CharacterID,))
+    conn.commit()
+    conn.close()
+
+
+delete_character(10)

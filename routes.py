@@ -104,6 +104,18 @@ def database_character_add():
     return render_template("database_character_add.html")
 
 
+@app.route('/database/delete')
+def database_delete():
+    return render_template('database_delete.html')
+
+
+@app.route('/database/delete/character')
+def database_character_delete():
+    characters = db.fetch("SELECT CharacterID, Name FROM CHARACTER", "all")
+    if not characters:
+        return redirect('/404')
+    return render_template('database_character_delete.html', characters=characters)
+
 # Page for individual assassins
 @app.route('/assassin/<int:id>')
 def assassin(id):

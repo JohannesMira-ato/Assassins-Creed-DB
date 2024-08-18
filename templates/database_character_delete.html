@@ -1,0 +1,8 @@
+{% extends 'layout.html'%}
+
+{% block content %}
+<h1>What character would you like to delete from the database?</h1>
+{% for character in characters %}
+<a href="/delete/{{character[0]}}">{{character[1]}}</a><br><br>
+{%endfor%}
+{% endblock %}

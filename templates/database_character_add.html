@@ -1,26 +1,28 @@
 {% extends 'layout.html'%} {% block content%}
-<h1>Add character to database</h1>
+<div id="add-character-title">
+  <h1>Add character to database</h1>
+</div>
 <div class="add-container">
   <div class="add-square">
     <div class="add-form-container">
       <form action="/database/add/character" method="POST" enctype="multipart/form-data">
         <label>Name</label>
-        <input type="text" name="character-name"/><br/>
+        <input type="text" name="character-name" /><br />
         <label>Alias</label>
-        <input type="text" name="character-alias"/><br/>
+        <input type="text" name="character-alias" /><br />
         <label>Birthdate</label>
-        <input type="text" name="character-birthdate"/><br/>
+        <input type="text" name="character-birthdate" /><br />
         <label>Deathdate</label>
-        <input type="text" name="character-deathdate"/><br/>
+        <input type="text" name="character-deathdate" /><br />
         <label>Gender</label>
-        <input type="text" name="character-gender"/><br/>
+        <input type="text" name="character-gender" /><br />
         <label>Affiliation</label>
-        <input type="text" name="character-affiliation"/><br/>
+        <input type="text" name="character-affiliation" /><br />
         <label>Description</label>
-        <input type="text" name="character-description"/><br/>
+        <input type="text" name="character-description" /><br />
         <label for="img">Image</label>
-        <input type="file" name="character-image"><br/>
-        <input type="submit" accept=".png" value="Submit"/>
+        <input type="file" name="character-image"><br />
+        <input type="submit" value="Submit" id="add-character-submit" />
       </form>
     </div>
   </div>
