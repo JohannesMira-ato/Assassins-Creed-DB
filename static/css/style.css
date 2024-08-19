@@ -339,6 +339,11 @@ footer{
     width: 100px;
 }
 
+#register-login:hover{
+    color: #858585;
+}
+
+
 .password-wrap{
     position: relative;
 }

@@ -42,4 +42,14 @@ def delete_character(CharacterID):
     conn.close()
 
 
-delete_character(10)
+def update_character(id, name, alias, birthdate, deathdate, gender,
+                     affiliation, description, profileimage):
+    conn = sqlite3.connect(database)
+    cur = conn.cursor()
+    cur.execute(f'''UPDATE Character
+                   SET Name="{name}", Alias="{alias}", Birthdate"{birthdate}",
+                   Deathdate="{deathdate}", Gender="{gender}",
+                   Affiliation"{affiliation}", Description="{description}",
+                   ProfileImage"{profileimage}"
+                   Where CharacterID ="{id}";''')
+                

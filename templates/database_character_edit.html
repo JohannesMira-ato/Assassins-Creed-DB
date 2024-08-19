@@ -1,0 +1,30 @@
+{% extends 'layout.html'%} {% block content%}
+<div id="add-character-title">
+  <h1>Edit character in database</h1>
+</div>
+<div class="add-container">
+  <div class="add-square">
+    <div class="add-form-container" method="POST">
+      <form action="/database/add/character" method="POST" enctype="multipart/form-data">
+        <label>Name</label>
+        <input type="text" name="character-name" value="{{character[1]}}"/><br />
+        <label>Alias</label>
+        <input type="text" name="character-alias" value="{{character[2]}}"/><br />
+        <label>Birthdate</label>
+        <input type="text" name="character-birthdate" value="{{character[3]}}" /><br />
+        <label>Deathdate</label>
+        <input type="text" name="character-deathdate" value="{{character[4]}}"/><br />
+        <label>Gender</label>
+        <input type="text" name="character-gender" value="{{character[5]}}"/><br />
+        <label>Affiliation</label>
+        <input type="text" name="character-affiliation" value="{{character[6]}}"/><br />
+        <label>Description</label>
+        <input type="text" name="character-description" value="{{character[7]}}"/><br />
+        <label for="img">Image</label>
+        <input type="file" name="character-image"><br />
+        <input type="submit" value="Submit" id="add-character-submit" />
+      </form>
+    </div>
+  </div>
+</div>
+{%endblock%}

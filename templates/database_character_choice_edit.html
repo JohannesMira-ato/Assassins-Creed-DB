@@ -1,0 +1,6 @@
+{% extends 'layout.html'%} {% block content%}
+  <h1>Which character's information would you like to edit?</h1>
+  {% for character in characters %}
+<a href="/database/edit/character/{{character[0]}}">{{character[1]}}</a><br><br>
+{%endfor%}
+{%endblock%}

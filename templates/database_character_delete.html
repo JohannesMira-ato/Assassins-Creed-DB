@@ -2,7 +2,14 @@
 
 {% block content %}
 <h1>What character would you like to delete from the database?</h1>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<p>{{ message }}</p>
+{% endfor %}
+{% endif %}
+{% endwith %}
 {% for character in characters %}
-<a href="/delete/{{character[0]}}">{{character[1]}}</a><br><br>
+<a href="/database/delete/character/{{character[0]}}">{{character[1]}}</a><br><br>
 {%endfor%}
 {% endblock %}

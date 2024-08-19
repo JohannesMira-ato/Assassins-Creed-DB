@@ -116,13 +116,40 @@ def database_character_delete():
         return redirect('/404')
     return render_template('database_character_delete.html', characters=characters)
 
+
+@app.route('/database/delete/character/<int:id>')
+def database_delete_character_id(id):
+    db.delete_character(id)
+    flash("Character successfully deleted!")
+    return redirect('/database/delete/character')
+
+
+@app.route('/database/edit')
+def database_edit():
+    return render_template('database_edit.html')
+
+
+@app.route('/database/edit/character')
+def database_edit_character_choice():
+    characters = db.fetch("SELECT CharacterID, Name FROM CHARACTER", "all")
+    return render_template('database_character_choice_edit.html', characters=characters)
+
+
+@app.route('/database/edit/character/<int:id>')
+def database_edit_character(id):
+    character = db.fetch("Select * FROM Character WHERE CharacterID = ?", "one", (id,))
+    if not character:
+        return redirect('/404')
+    return render_template("database_character_edit.html", character=character)
+
+
 # Page for individual assassins
 @app.route('/assassin/<int:id>')
 def assassin(id):
     assassin = db.fetch('SELECT * FROM Character WHERE CharacterID = ?',
                         "one", (id,))
     if not assassin:
-        return render_template('404.html')
+        return redirect('/404')
     else:
         return render_template('assassin.html', assassin=assassin)
 
