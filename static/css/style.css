@@ -404,34 +404,31 @@ footer{
     place-items: center;
 }
 
-.add-square{
+.db-form-square{
     padding: 1rem;
     border-radius: 5%;
     background-color: #414141   ;
 }
 
-.add-container{
+.db-form-container{
     display: grid;
     place-content: center;
     font-size: 20px;
 }
 
-.add-form-container label{
+.db-form-container label{
     display: inline-block;
     width: 200px;
     padding: 10px;
     color: white;
 }
 
-.add-form-container input{
+.db-form-container input{
     width: 350px;
+    height: auto;
 }
 
-#add-character-submit{
-    width: 100px;
-}
-
-#add-character-title{
+.db-character-title{
     display: grid;
     place-content: center;
     font-size: 20px;

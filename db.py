@@ -44,12 +44,13 @@ def delete_character(CharacterID):
 
 def update_character(id, name, alias, birthdate, deathdate, gender,
                      affiliation, description, profileimage):
-    conn = sqlite3.connect(database)
+    conn = sqlite3.connect("ACDB - Copy.db")
     cur = conn.cursor()
     cur.execute(f'''UPDATE Character
-                   SET Name="{name}", Alias="{alias}", Birthdate"{birthdate}",
-                   Deathdate="{deathdate}", Gender="{gender}",
-                   Affiliation"{affiliation}", Description="{description}",
-                   ProfileImage"{profileimage}"
-                   Where CharacterID ="{id}";''')
-                
+                SET Name="{name}", Alias="{alias}", Birthdate="{birthdate}",
+                Deathdate="{deathdate}", Gender="{gender}",
+                Affiliation="{affiliation}", Description="{description}",
+                ProfileImage="{profileimage}"
+                Where CharacterID ="{id}";''')
+    conn.commit()
+    conn.close()

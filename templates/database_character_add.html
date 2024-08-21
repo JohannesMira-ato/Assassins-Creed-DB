@@ -1,10 +1,10 @@
 {% extends 'layout.html'%} {% block content%}
-<div id="add-character-title">
+<div class="db-character-title">
   <h1>Add character to database</h1>
 </div>
-<div class="add-container">
-  <div class="add-square">
-    <div class="add-form-container">
+<div class="db-form-container">
+  <div class="db-form-square">
+    <div class="db-form-container">
       <form action="/database/add/character" method="POST" enctype="multipart/form-data">
         <label>Name</label>
         <input type="text" name="character-name" /><br />
@@ -19,10 +19,10 @@
         <label>Affiliation</label>
         <input type="text" name="character-affiliation" /><br />
         <label>Description</label>
-        <input type="text" name="character-description" /><br />
-        <label for="img">Image</label>
+          <input type="text" name="character-description"/><br />
+         <label for="img">Image</label>
         <input type="file" name="character-image"><br />
-        <input type="submit" value="Submit" id="add-character-submit" />
+        <input type="submit" value="Submit" />
       </form>
     </div>
   </div>

@@ -135,11 +135,25 @@ def database_edit_character_choice():
     return render_template('database_character_choice_edit.html', characters=characters)
 
 
-@app.route('/database/edit/character/<int:id>')
+@app.route('/database/edit/character/<int:id>', methods=["GET", "POST"])
 def database_edit_character(id):
     character = db.fetch("Select * FROM Character WHERE CharacterID = ?", "one", (id,))
     if not character:
         return redirect('/404')
+    if request.method == "POST":
+        name = request.form.get("character-name")
+        alias = request.form.get("character-alias")
+        birthdate = request.form.get("character-birthdate")
+        deathdate = request.form.get("character-deathdate")
+        gender = request.form.get("character-gender")
+        affiliation = request.form.get("character-affiliation")
+        description = request.form.get("character-description")
+        profile_image = request.form.get("character-profileimage")
+        print(name, alias, birthdate, deathdate, gender,
+              affiliation, description, profile_image, id)
+        db.update_character(id, name, alias, birthdate, deathdate, gender,
+                            affiliation, description, profile_image)
+        return redirect(f'/database/edit/character/{id}')
     return render_template("database_character_edit.html", character=character)
 
 
@@ -150,7 +164,7 @@ def assassin(id):
                         "one", (id,))
     if not assassin:
         return redirect('/404')
-    else:
+    else:   
         return render_template('assassin.html', assassin=assassin)
 
 
