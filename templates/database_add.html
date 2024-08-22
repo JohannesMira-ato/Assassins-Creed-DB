@@ -1,7 +1,31 @@
- {%extends "layout.html"%}
+{%extends "layout.html"%}
 
- {%block content%}
- <div><a href="/database/add/character">Character</a></div>
- <div><a href="">Games</a></div>
- <div><a href="">Weapons</a></div>
- {%endblock%}
+{%block content%}
+<div class="db-choice-title">
+    <h1>What would you like to add to the database?</h1>
+</div>
+
+<div class="db-choice-grid">
+    <div class="db-choice-container">
+        <div>
+            <a href="/database/add/character"><img src="/static/images/AllAssassins.png" alt=""></a>
+            <a href="/database/add/character">Characters</a>
+        </div>
+    </div>
+
+    <div class="db-choice-container">
+        <div>
+            <a href=""><img src="/static/images/AllGames.png" alt=""></a>
+            <a href="">Games</a>
+        </div>
+    </div>
+    <div class="db-choice-container">
+
+        <div>
+            <a href=""><img src="/static/images/AllWeapons.png" alt=""></a>
+            <a href="">Weapons</a>
+        </div>
+    </div>
+</div>
+</div>
+{%endblock%}

@@ -89,18 +89,19 @@ def database_add():
 
 
 # Page to add to characters table
-@app.route('/database/add/character')
+@app.route('/database/add/character', methods=["GET", "POST"])
 def database_character_add():
-    name = (request.args.get("character-name"))
-    alias = (request.args.get("character-alias"))
-    birthdate = (request.args.get("character-birthdate"))
-    deathdate = (request.args.get("character-deathdate"))
-    gender = (request.args.get("character-gender"))
-    affiliation = (request.args.get("character-affiliation"))
-    description = (request.args.get("character-description"))
-    profile_image = (request.args.get("character-profileimage"))
-    db.add_character(name, alias, birthdate, deathdate, gender,
-                     affiliation, description, profile_image)
+    if request.method == "POST":
+        name = request.form.get("character-name")
+        alias = request.form.get("character-alias")
+        birthdate = request.form.get("character-birthdate")
+        deathdate = request.form.get("character-deathdate")
+        gender = request.form.get("character-gender")
+        affiliation = request.form.get("character-affiliation")
+        description = request.form.get("character-description")
+        profile_image = request.form.get("character-profileimage")
+        db.add_character(name, alias, birthdate, deathdate, gender,
+                         affiliation, description, profile_image)
     return render_template("database_character_add.html")
 
 
