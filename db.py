@@ -16,6 +16,14 @@ def add_character(name, alias, birthdate, deathdate, gender,
     conn.close()
 
 
+def add_game(title, releasedate, description):
+    conn = sqlite3.connect("ACDB - Copy.db")
+    cur = conn.cursor()
+    cur.execute(''' INSERT INTO Game (Title, ReleaseDate, Description)
+                VALUES (?,?,?)''', (title, releasedate, description))
+    conn.commit()
+    conn.close()
+
 #  Function to choose between fetchone and fetchall query
 def fetch(query, fetchtype, parameter=None):
     conn = sqlite3.connect(database)  # TEST DB

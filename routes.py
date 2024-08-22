@@ -105,6 +105,21 @@ def database_character_add():
     return render_template("database_character_add.html")
 
 
+@app.route('/database/add/game', methods=["GET", "POST"])
+def database_game_add():
+    if request.method == "POST":
+        title = request.form.get("game-title")
+        releasedate = request.form.get('game-releasedate')
+        description = request.form.get('game-description')
+        print(title, releasedate, description)
+        conn = sqlite3.connect("ACDB - Copy.db")
+        cur = conn.cursor()
+        cur.execute(''' INSERT INTO Game (Title, ReleaseDate, Description)
+                    VALUES (?,?,?)''', (title, releasedate, description))
+        conn.commit()
+        conn.close()
+    return render_template('database_game_add.html')
+
 @app.route('/database/delete')
 def database_delete():
     return render_template('database_delete.html')

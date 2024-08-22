@@ -1,0 +1,24 @@
+{% extends 'layout.html'%}
+
+{% block content %}
+<div class="db-character-title">
+    <h1>Add game to database</h1>
+</div>
+<div class="db-form-container">
+    <div class="db-form-square">
+
+        <form action="/database/add/game" method="POST">
+            <label>Title</label>
+            <input type="text" name="game-title"><br>
+            <label>ReleaseDate</label>
+            <input type="text" name="game-releasedate"><br>
+            <label>Description</label>
+            <input type="text" name="game-description"><br>
+            <label>Image</label>
+            <input type="text" name="game-image"><br>
+            <input type="submit">
+
+        </form>
+    </div>
+</div>
+{%endblock%}
