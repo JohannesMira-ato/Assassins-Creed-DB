@@ -1,21 +1,21 @@
 {%extends 'layout.html'%}
 {%block content%}
-<div class="game-hero">
+<div class="individual-hero">
     <div class="individual-img">
         <img src="/static/images/placeholder.png" height="700">
-    </div>
+    </div> <!-- Individual-img-->
     <div>
-        <div class="weapon-text">
+        <div class="individual-text">
             <h1>{{weapon[0][1]}}</h1>
             <br>
-        </div>
+        </div> <!-- weapon-text-->
         <div class="collapsible-wrapper">
             <button class="weapon-collapsible">Description</button>
             <div class="weapon-collapsible-content">
                 <br>
                 <h1>{{weapon[0][4]}}</h1><br>
-            </div>
-        </div>
+            </div> <!-- weapon-collapsible-content-->
+        </div> <!-- collpasible-wrapper-->
         <div class="collapsible-wrapper">
             <button class="weapon-collapsible">Users</button>
             <div class="weapon-collapsible-content">
@@ -41,10 +41,10 @@
                         }
                       });
                     }
-                  </script>
-            </div>
-        </div>
-    </div>
-</div>
+                </script>
+            </div> <!-- weapon-collapsible-content-->
+        </div> <!-- collapsible-wrapper-->
+    </div> <!-- Empty div to fill for grid-->
+</div> <!-- game-hero -->
 
 {% endblock %}

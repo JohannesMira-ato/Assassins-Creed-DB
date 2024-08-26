@@ -1,27 +1,27 @@
 {%extends 'layout.html'%}
 {%block content%}
-<div class="assassin-hero">
+<div class="individual-hero">
   <div class="individual-img">
     <img src="/static/images/{{assassin[8]}}" alt="" width="950" height="auto">
-  </div>
-  <div class="assassin-information">
-    <div class="assassin-text">
+  </div> <!-- individual-img -->
+  <div class="assassin-information"> <!-- not used? -->
+    <div class="individual-text">
       <h1>{{assassin[1]}}</h1>
       {% if assassin[2] is not none %}
       <h1>"{{assassin[2]}}"</h1>
       {% endif %}
-    </div>
+    </div> <!-- assassin-text-->
 
-    
+
     <div class="collapsible-wrapper">
       <button class="assassin-collapsible">Expand For More Information</button>
-      <div class="acollapsible-content"><br>
+      <div class="assassin-collapsible-content"><br>
         <h2>{{assassin[7]}}</h2> <br>
         <h2>Birthdate: {{assassin[3]}}</h2><br>
         <h2>Deathdate: {{assassin[4]}}</h2><br>
         <h2>Gender: {{assassin[5]}}</h2> <br>
-      </div>
-    </div>
+      </div> <!-- acollapsible-content-->
+    </div> <!-- collapsible-wrapper-->
     <script>
       var coll = document.getElementsByClassName("assassin-collapsible");
       var i;
@@ -38,7 +38,7 @@
         });
       }
     </script>
-  </div>
-</div>
+  </div> <!-- assassin-information-->
+</div> <!--assassin-hero -->
 
 {%endblock%}

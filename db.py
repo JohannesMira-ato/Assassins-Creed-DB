@@ -5,8 +5,10 @@ database = "ACDB - Copy.db"  # CURRENTLY A TEST DATABASE
 
 def add_character(name, alias, birthdate, deathdate, gender,
                   affiliation, description, profileimage):
+    # Database connection
     conn = sqlite3.connect(database)
     cur = conn.cursor()
+    # Add all information to character table
     cur.execute("""INSERT INTO Character (name, alias, birthdate, deathdate,
                 gender, affiliation, description, profileimage)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?);""",
@@ -17,16 +19,20 @@ def add_character(name, alias, birthdate, deathdate, gender,
 
 
 def add_game(title, releasedate, description):
+    # Database connection
     conn = sqlite3.connect("ACDB - Copy.db")
     cur = conn.cursor()
+    # Add all information to game table
     cur.execute(''' INSERT INTO Game (Title, ReleaseDate, Description)
                 VALUES (?,?,?)''', (title, releasedate, description))
     conn.commit()
     conn.close()
 
-#  Function to choose between fetchone and fetchall query
+
+#  Function to get information from db and for fetchone and fetchall query
 def fetch(query, fetchtype, parameter=None):
-    conn = sqlite3.connect(database)  # TEST DB
+    # Database connection
+    conn = sqlite3.connect(database)
     cur = conn.cursor()
     if fetchtype == "all":
         if parameter is None:
@@ -43,17 +49,22 @@ def fetch(query, fetchtype, parameter=None):
 
 
 def delete_character(CharacterID):
+    # Database connection
     conn = sqlite3.connect(database)
     cur = conn.cursor()
+    # Delete character from database
     cur.execute("DELETE FROM Character WHERE CharacterID =?", (CharacterID,))
     conn.commit()
     conn.close()
 
 
+# Edit character information in database
 def update_character(id, name, alias, birthdate, deathdate, gender,
                      affiliation, description, profileimage):
+    # Database connection
     conn = sqlite3.connect("ACDB - Copy.db")
     cur = conn.cursor()
+    # Update character information
     cur.execute(f'''UPDATE Character
                 SET Name="{name}", Alias="{alias}", Birthdate="{birthdate}",
                 Deathdate="{deathdate}", Gender="{gender}",

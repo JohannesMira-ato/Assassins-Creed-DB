@@ -21,7 +21,7 @@
                     <button type="button" id="show_password">
                         <img src="/static/images/eye_closed.svg" alt="Show Password">
                     </button>
-                </div>
+                </div> <!-- password-wrap-->
                 <script>
                     // Show password button from https://www.youtube.com/watch?v=sVBRJ-0AzXw
                     const show_pw_btn = document.querySelector('#show_password')
@@ -60,12 +60,12 @@
                                 ? '/static/images/eye_closed.svg' 
                                 : '/static/images/eye_open.svg'
                         })</script>
-
+                </div> <!-- password-wrap -->
                 <input type="submit" value="Register" id="register-submit"><br>
             </form>
             <br>
             <p>Have an account? <a href="/login" id="register-login">Login Here</a></p>
-        </div>
-    </div>
-</div>
+        </div> <!-- register-form-->
+    </div> <!-- register-square -->
+</div> <!-- register-container -->
 {% endblock %}

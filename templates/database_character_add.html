@@ -1,28 +1,28 @@
 {% extends 'layout.html'%} {% block content%}
 <div class="db-character-title">
   <h1>Add character to database</h1>
-</div>
+</div> <!-- db-character-title-->
 <div class="db-form-container">
   <div class="db-form-square">
-      <form action="/database/add/character" method="POST" enctype="multipart/form-data">
-        <label>Name</label>
-        <input type="text" name="character-name" /><br />
-        <label>Alias</label>
-        <input type="text" name="character-alias" /><br />
-        <label>Birthdate</label>
-        <input type="text" name="character-birthdate" /><br />
-        <label>Deathdate</label>
-        <input type="text" name="character-deathdate" /><br />
-        <label>Gender</label>
-        <input type="text" name="character-gender" /><br />
-        <label>Affiliation</label>
-        <input type="text" name="character-affiliation" /><br />
-        <label>Description</label>
-          <input type="text" name="character-description"/><br />
-         <label for="img">Image</label>
-        <input type="file" name="character-image"><br />
-        <input type="submit" value="Submit" />
-      </form>
-  </div>
-</div>
+    <form action="/database/add/character" method="POST" enctype="multipart/form-data">
+      <label>Name</label>
+      <input type="text" name="character-name" /><br />
+      <label>Alias</label>
+      <input type="text" name="character-alias" /><br />
+      <label>Birthdate</label>
+      <input type="text" name="character-birthdate" /><br />
+      <label>Deathdate</label>
+      <input type="text" name="character-deathdate" /><br />
+      <label>Gender</label>
+      <input type="text" name="character-gender" /><br />
+      <label>Affiliation</label>
+      <input type="text" name="character-affiliation" /><br />
+      <label>Description</label>
+      <input type="text" name="character-description" /><br />
+      <label for="img">Image</label>
+      <input type="file" name="character-image"><br />
+      <input type="submit" value="Submit" />
+    </form>
+  </div> <!-- db-form-square-->
+</div> <!-- db-form-container-->
 {%endblock%}
