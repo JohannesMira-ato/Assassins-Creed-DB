@@ -5,7 +5,16 @@
 <div class="db-form-container">
   <div class="db-form-square">
     <div class="db-form-container">
-      <form action='/database/edit/character/{{character[0]}}' method="POST">
+      <div class="db-form-message">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      {% for message in messages %}
+      <h2>{{ message }}</h2>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+    </div>
+      <form action='/database/edit/character/{{character[0]}}' method="POST" enctype="multipart/form-data">
         <label>Name</label>
         <input type="text" name="character-name" value="{{character[1]}}"/><br />
         <label>Alias</label>
@@ -20,8 +29,8 @@
         <input type="text" name="character-affiliation" value="{{character[6]}}"/><br />
         <label>Description</label>
         <input type="text" name="character-description" value="{{character[7]}}"/><br />
-        <label for="img">Image</label>
-        <input type="file" name="character-image"><br />
+        {{form.hidden_tag()}}
+        {{form.file()}}
         <input type="submit" value="Submit"/>
       </form>   
     </div> <!-- db-form-container-->

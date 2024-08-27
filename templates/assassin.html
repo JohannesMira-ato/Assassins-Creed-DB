@@ -4,10 +4,10 @@
   <div class="individual-img">
     <img src="/static/images/{{assassin[8]}}" alt="" width="950" height="auto">
   </div> <!-- individual-img -->
-  <div class="assassin-information"> <!-- not used? -->
+  <div class="assassin-information"> <!-- for grid formatting-->
     <div class="individual-text">
       <h1>{{assassin[1]}}</h1>
-      {% if assassin[2] is not none %}
+      {% if assassin[2] is not none and assassin[2] != "" %}
       <h1>"{{assassin[2]}}"</h1>
       {% endif %}
     </div> <!-- assassin-text-->

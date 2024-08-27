@@ -1,9 +1,89 @@
 from flask import Flask, render_template, request, redirect, session, flash
+from flask_wtf import FlaskForm  # pip install flask_wtf wtforms
+from wtforms import FileField, SubmitField
+from werkzeug.utils import secure_filename
+from werkzeug.exceptions import RequestEntityTooLarge
+import os
 import sqlite3
 import db
 
 app = Flask(__name__)
 app.secret_key = "SHOCEKR"
+app.config['UPLOAD_FOLDER'] = 'static/images'
+# NEED TO MAKE ERROR FOR FILE SIZE
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB
+ALLOWED_EXTENSIONS = set(['png', 'jpg'])
+
+
+def check_filetype(filename):
+    if filename.endswith(".png"):
+        return ("png")
+    elif filename.endswith(".jpg"):
+        return (".jpg")
+
+# Check if img format is in allowed extentions
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+class UploadFileForm(FlaskForm):
+    file = FileField("File")
+    submit = SubmitField("Upload File")
+
+
+# Route to go to form to edit character entry
+@app.route('/database/edit/character/<int:id>', methods=["GET", "POST"])
+def database_edit_character(id):
+    # Get character from database
+    character = db.fetch("Select * FROM Character WHERE CharacterID = ?", "one", (id,))
+    # If character doesn't exist
+    if not character:
+        return redirect('/404')
+    # Image upload
+    try:
+        form = UploadFileForm()
+        # Check for valid post request
+        if form.validate_on_submit():
+            file = form.file.data  # Get img from form
+            # If img uploaded
+            if file:
+                # Check if img format is allowed
+                if not allowed_file(file.filename):
+                    flash("Only jpg and png files are allowed")
+                    return redirect(f"/database/edit/character/{id}")
+
+                # Rename file to character name + filetype
+                filetype = check_filetype(file.filename)
+                characterimg = character[1].replace(" ", "_")
+                file.filename = (f"{characterimg}{filetype}")
+
+                # Save file in /static/images folder
+                file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                          app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
+    except RequestEntityTooLarge:
+        flash("Image size exceeds the 16MB limit")
+        return redirect(f"/database/edit/character/{id}")
+
+        
+    # Form submission
+    if request.method == "POST":
+        # User input
+        name = request.form.get("character-name")
+        alias = request.form.get("character-alias")
+        birthdate = request.form.get("character-birthdate")
+        deathdate = request.form.get("character-deathdate")
+        gender = request.form.get("character-gender")
+        affiliation = request.form.get("character-affiliation")
+        description = request.form.get("character-description")
+        profile_image = file.filename
+        print(name, alias, birthdate, deathdate, gender,
+              affiliation, description, profile_image, id)
+        # Update function for character
+        db.update_character(id, name, alias, birthdate, deathdate, gender,
+                            affiliation, description, profile_image)
+        flash("Characer entry successfully edited")
+        return redirect(f'/database/edit/character/{id}')
+    return render_template("database_character_edit.html", character=character, form=form)
 
 
 # 404 error page
@@ -177,32 +257,38 @@ def database_edit_character_choice():
     return render_template('database_character_choice_edit.html', characters=characters)
 
 
-# Route to go to form to edit character entry
-@app.route('/database/edit/character/<int:id>', methods=["GET", "POST"])
-def database_edit_character(id):
-    # Get character from database
-    character = db.fetch("Select * FROM Character WHERE CharacterID = ?", "one", (id,))
-    # If character doesn't exist
-    if not character:
-        return redirect('/404')
-    # Form submission
-    if request.method == "POST":
-        # User input
-        name = request.form.get("character-name")
-        alias = request.form.get("character-alias")
-        birthdate = request.form.get("character-birthdate")
-        deathdate = request.form.get("character-deathdate")
-        gender = request.form.get("character-gender")
-        affiliation = request.form.get("character-affiliation")
-        description = request.form.get("character-description")
-        profile_image = request.form.get("character-profileimage")
-        print(name, alias, birthdate, deathdate, gender,
-              affiliation, description, profile_image, id)
-        # Update function for character
-        db.update_character(id, name, alias, birthdate, deathdate, gender,
-                            affiliation, description, profile_image)
-        return redirect(f'/database/edit/character/{id}')
-    return render_template("database_character_edit.html", character=character)
+# # Route to go to form to edit character entry
+# @app.route('/database/edit/character/<int:id>', methods=["GET", "POST"])
+# def database_edit_character(id):
+#     # Get character from database
+#     character = db.fetch("Select * FROM Character WHERE CharacterID = ?", "one", (id,))
+#     # If character doesn't exist
+#     if not character:
+#         return redirect('/404')
+#     # Image upload
+#     form = UploadFileForm()
+#     if form.validate_on_submit():
+#         file = form.file.data
+#         file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),
+#                   app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
+#     # Form submission
+#     if request.method == "POST":
+#         # User input
+#         name = request.form.get("character-name")
+#         alias = request.form.get("character-alias")
+#         birthdate = request.form.get("character-birthdate")
+#         deathdate = request.form.get("character-deathdate")
+#         gender = request.form.get("character-gender")
+#         affiliation = request.form.get("character-affiliation")
+#         description = request.form.get("character-description")
+#         profile_image = request.form.get("character-profileimage")
+#         print(name, alias, birthdate, deathdate, gender,
+#               affiliation, description, profile_image, id)
+#         # Update function for character
+#         db.update_character(id, name, alias, birthdate, deathdate, gender,
+#                             affiliation, description, profile_image)
+#         return redirect(f'/database/edit/character/{id}')
+#     return render_template("database_character_edit.html", character=character, form=form)
 
 
 # Page for individual assassins
