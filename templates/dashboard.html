@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+
+{%block content%}
+<h1>Welcome {{username}}</h1>
+<div><a href="/database/add">Add to database</a></div><br>
+<div><a href="/database/edit">Edit database</a></div><br>
+<div><a href="/database/delete">Delete from database</a></div><br>
+<a href="/logout">Logout</a>
+{%endblock%}

@@ -9,9 +9,8 @@ import db
 
 app = Flask(__name__)
 app.secret_key = "SHOCEKR"
-app.config['UPLOAD_FOLDER'] = 'static/images'
-# NEED TO MAKE ERROR FOR FILE SIZE
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB
+app.config['UPLOAD_FOLDER'] = 'static/images'  # Uploaded file location
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB file size limit
 ALLOWED_EXTENSIONS = set(['png', 'jpg'])
 
 
@@ -21,6 +20,7 @@ def check_filetype(filename):
     elif filename.endswith(".jpg"):
         return (".jpg")
 
+
 # Check if img format is in allowed extentions
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -29,61 +29,6 @@ def allowed_file(filename):
 class UploadFileForm(FlaskForm):
     file = FileField("File")
     submit = SubmitField("Upload File")
-
-
-# Route to go to form to edit character entry
-@app.route('/database/edit/character/<int:id>', methods=["GET", "POST"])
-def database_edit_character(id):
-    # Get character from database
-    character = db.fetch("Select * FROM Character WHERE CharacterID = ?", "one", (id,))
-    # If character doesn't exist
-    if not character:
-        return redirect('/404')
-    # Image upload
-    try:
-        form = UploadFileForm()
-        # Check for valid post request
-        if form.validate_on_submit():
-            file = form.file.data  # Get img from form
-            # If img uploaded
-            if file:
-                # Check if img format is allowed
-                if not allowed_file(file.filename):
-                    flash("Only jpg and png files are allowed")
-                    return redirect(f"/database/edit/character/{id}")
-
-                # Rename file to character name + filetype
-                filetype = check_filetype(file.filename)
-                characterimg = character[1].replace(" ", "_")
-                file.filename = (f"{characterimg}{filetype}")
-
-                # Save file in /static/images folder
-                file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),
-                          app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
-    except RequestEntityTooLarge:
-        flash("Image size exceeds the 16MB limit")
-        return redirect(f"/database/edit/character/{id}")
-
-        
-    # Form submission
-    if request.method == "POST":
-        # User input
-        name = request.form.get("character-name")
-        alias = request.form.get("character-alias")
-        birthdate = request.form.get("character-birthdate")
-        deathdate = request.form.get("character-deathdate")
-        gender = request.form.get("character-gender")
-        affiliation = request.form.get("character-affiliation")
-        description = request.form.get("character-description")
-        profile_image = file.filename
-        print(name, alias, birthdate, deathdate, gender,
-              affiliation, description, profile_image, id)
-        # Update function for character
-        db.update_character(id, name, alias, birthdate, deathdate, gender,
-                            affiliation, description, profile_image)
-        flash("Characer entry successfully edited")
-        return redirect(f'/database/edit/character/{id}')
-    return render_template("database_character_edit.html", character=character, form=form)
 
 
 # 404 error page
@@ -126,6 +71,7 @@ def register():
         if password != confirm_password:
             flash("Passwords do not match")
             return redirect('/register')
+        # Add account to database
         cur.execute(f"INSERT INTO UserInfo (Username, Password)\
                      values ('{username}', '{password}')")
         conn.commit()
@@ -154,7 +100,7 @@ def login():
         # If user input matches database
         if user and password == user[1]:
             session['username'] = user[0]
-            return redirect("/database", code=302)
+            return redirect("/dashboard", code=302)
         else:
             flash("Invalid Login")
             return redirect('/login')
@@ -168,10 +114,11 @@ def logout():
     return redirect("/login")
 
 
-@app.route('/database')
-def database():
+# Dashboard route
+@app.route('/dashboard')
+def dashboard():
     if 'username' in session:
-        return render_template('database.html', username=session['username'])
+        return render_template('dashboard.html', username=session['username'])
     else:
         return redirect("/login", code=302)
 
@@ -229,7 +176,9 @@ def database_delete():
 # Route to delete character from db
 @app.route('/database/delete/character')
 def database_character_delete():
+    # Get all characters' name from database
     characters = db.fetch("SELECT CharacterID, Name FROM CHARACTER", "all")
+    # If nothing found in db
     if not characters:
         return redirect('/404')
     return render_template('database_character_delete.html', characters=characters)
@@ -257,38 +206,56 @@ def database_edit_character_choice():
     return render_template('database_character_choice_edit.html', characters=characters)
 
 
-# # Route to go to form to edit character entry
-# @app.route('/database/edit/character/<int:id>', methods=["GET", "POST"])
-# def database_edit_character(id):
-#     # Get character from database
-#     character = db.fetch("Select * FROM Character WHERE CharacterID = ?", "one", (id,))
-#     # If character doesn't exist
-#     if not character:
-#         return redirect('/404')
-#     # Image upload
-#     form = UploadFileForm()
-#     if form.validate_on_submit():
-#         file = form.file.data
-#         file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),
-#                   app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
-#     # Form submission
-#     if request.method == "POST":
-#         # User input
-#         name = request.form.get("character-name")
-#         alias = request.form.get("character-alias")
-#         birthdate = request.form.get("character-birthdate")
-#         deathdate = request.form.get("character-deathdate")
-#         gender = request.form.get("character-gender")
-#         affiliation = request.form.get("character-affiliation")
-#         description = request.form.get("character-description")
-#         profile_image = request.form.get("character-profileimage")
-#         print(name, alias, birthdate, deathdate, gender,
-#               affiliation, description, profile_image, id)
-#         # Update function for character
-#         db.update_character(id, name, alias, birthdate, deathdate, gender,
-#                             affiliation, description, profile_image)
-#         return redirect(f'/database/edit/character/{id}')
-#     return render_template("database_character_edit.html", character=character, form=form)
+# Route to go to form to edit character entry
+@app.route('/database/edit/character/<int:id>', methods=["GET", "POST"])
+def database_edit_character(id):
+    # Get character from database
+    character = db.fetch("Select * FROM Character WHERE CharacterID = ?", "one", (id,))
+    # If character doesn't exist
+    if not character:
+        return redirect('/404')
+    # Image upload
+    try:
+        form = UploadFileForm()
+        # Check for valid post request
+        if form.validate_on_submit():
+            file = form.file.data  # Get img from form
+            # If img uploaded
+            if file:
+                # Check if img format is allowed
+                if not allowed_file(file.filename):
+                    flash("Only jpg and png files are allowed")
+                    return redirect(f"/database/edit/character/{id}")
+
+                # Rename file to character name + filetype
+                filetype = check_filetype(file.filename)
+                characterimg = character[1].replace(" ", "_")
+                file.filename = (f"{characterimg}{filetype}")
+
+                # Save file in /static/images folder
+                file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                          app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
+    # Large file size error
+    except RequestEntityTooLarge:
+        flash("Image size exceeds the 16MB limit")
+        return redirect(f"/database/edit/character/{id}")
+    # Form submission
+    if request.method == "POST":
+        # User input
+        name = request.form.get("character-name")
+        alias = request.form.get("character-alias")
+        birthdate = request.form.get("character-birthdate")
+        deathdate = request.form.get("character-deathdate")
+        gender = request.form.get("character-gender")
+        affiliation = request.form.get("character-affiliation")
+        description = request.form.get("character-description")
+        profile_image = file.filename
+        # Update function for character
+        db.update_character(id, name, alias, birthdate, deathdate, gender,
+                            affiliation, description, profile_image)
+        flash("Characer entry successfully edited")
+        return redirect(f'/database/edit/character/{id}')
+    return render_template("database_character_edit.html", character=character, form=form)
 
 
 # Page for individual assassins
@@ -297,6 +264,7 @@ def assassin(id):
     # Gets character information from database
     assassin = db.fetch('SELECT * FROM Character WHERE CharacterID = ?',
                         "one", (id,))
+    # If asssassin not found
     if not assassin:
         return redirect('/404')
     else:
