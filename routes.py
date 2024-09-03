@@ -275,9 +275,12 @@ def assassin(id):
 @app.route('/all_assassins')
 def all_assassins():
     # All characters who's affiliation is "Assassin"
-    assassins = db.fetch('''SELECT CharacterID, Name, ProfileImage FROM
-                        Character WHERE Affiliation LIKE "%Assassin%";''',
-                         "all")
+    # assassins = db.fetch('''SELECT CharacterID, Name, ProfileImage FROM
+    #                     Character WHERE Affiliation LIKE "%Assassin%";''',
+    #                      "all")
+    assassins = db.fetch(query='''SELECT CharacterID, Name, ProfileImage FROM
+                         Character WHERE Affiliation LIKE "%Assassin%";''',
+                         fetchtype="all")
     return render_template('all_assassins.html', assassins=assassins)
 
 

@@ -1,32 +1,5 @@
 import sqlite3
-
 database = "ACDB - Copy.db"  # CURRENTLY A TEST DATABASE
-
-
-def add_character(name, alias, birthdate, deathdate, gender,
-                  affiliation, description, profileimage):
-    # Database connection
-    conn = sqlite3.connect(database)
-    cur = conn.cursor()
-    # Add all information to character table
-    cur.execute("""INSERT INTO Character (name, alias, birthdate, deathdate,
-                gender, affiliation, description, profileimage)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?);""",
-                (name, alias, birthdate, deathdate, gender, affiliation,
-                 description, profileimage,))
-    conn.commit()
-    conn.close()
-
-
-def add_game(title, releasedate, description):
-    # Database connection
-    conn = sqlite3.connect("ACDB - Copy.db")
-    cur = conn.cursor()
-    # Add all information to game table
-    cur.execute(''' INSERT INTO Game (Title, ReleaseDate, Description)
-                VALUES (?,?,?)''', (title, releasedate, description))
-    conn.commit()
-    conn.close()
 
 
 #  Function to get information from db and for fetchone and fetchall query
@@ -48,28 +21,36 @@ def fetch(query, fetchtype, parameter=None):
     return results
 
 
-def delete_character(CharacterID):
-    # Database connection
+def character(id=None, name=None, alias=None, birthdate=None, deathdate=None,
+              gender=None, affiliation=None, description=None, profileimage=None,
+              action=None):
+    print("Function active")
+    # database connection
     conn = sqlite3.connect(database)
     cur = conn.cursor()
-    # Delete character from database
-    cur.execute("DELETE FROM Character WHERE CharacterID =?", (CharacterID,))
-    conn.commit()
-    conn.close()
-
-
-# Edit character information in database
-def update_character(id, name, alias, birthdate, deathdate, gender,
-                     affiliation, description, profileimage):
-    # Database connection
-    conn = sqlite3.connect("ACDB - Copy.db")
-    cur = conn.cursor()
-    # Update character information
-    cur.execute(f'''UPDATE Character
+    if action == "add":
+        cur.execute("""INSERT INTO Character (name, alias, birthdate, deathdate,
+                        gender, affiliation, description, profileimage)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?);""",
+                    (name, alias, birthdate, deathdate, gender, affiliation,
+                     description, profileimage,))
+    if action == "edit":
+        cur.execute(f'''UPDATE Character
                 SET Name="{name}", Alias="{alias}", Birthdate="{birthdate}",
                 Deathdate="{deathdate}", Gender="{gender}",
                 Affiliation="{affiliation}", Description="{description}",
                 ProfileImage="{profileimage}"
                 Where CharacterID ="{id}";''')
+    if action == "delete":
+        cur.execute("DELETE FROM Character WHERE CharacterID =?", (id,))
     conn.commit()
     conn.close()
+
+
+def game(id, title, releasedate, description, action):
+    # Database connection
+    conn = sqlite3.connect("ACDB - Copy.db")
+    cur = conn.cursor()
+    if action == "add":
+        cur.execute(''' INSERT INTO Game (Title, ReleaseDate, Description)
+            VALUES (?,?,?)''', (title, releasedate, description))
