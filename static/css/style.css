@@ -34,7 +34,7 @@ body {
 
 /* Styling items in header except logo */
 .header-item {
-    padding-right: 20px;
+    padding-right: 2rem;
     padding-top: 20px;
     position: relative;
     top: 40px;
