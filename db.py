@@ -22,9 +22,10 @@ def fetch(query, fetchtype, parameter=None):
 
 
 def character(id=None, name=None, alias=None, birthdate=None, deathdate=None,
-              gender=None, affiliation=None, description=None, profileimage=None,
-              action=None):
+              gender=None, affiliation=None, description=None, action=None):
     print("Function active")
+    # if all[id, name, alias, birthdate, deathdate, gender, affiliation, description] is None:
+    #     return None
     # database connection
     conn = sqlite3.connect(database)
     cur = conn.cursor()

@@ -130,9 +130,35 @@ def database_add():
 
 
 # Page to add to characters table
+# Need to fix the renaming of the file so that it works properly & fix function in db
 @app.route('/database/add/character', methods=["GET", "POST"])
 def database_character_add():
-    # Form submission
+    try:
+    # Image upload
+        form = UploadFileForm()
+        # Check for valid post request
+        if form.validate_on_submit():
+            file = form.file.data  # Get img from form
+            # If img uploaded
+            if file:
+                # Check if img format is allowed
+                if not allowed_file(file.filename):
+                    flash("Only jpg and png files are allowed")
+                    return redirect("/database/add/character")
+
+                # Rename file to character name + filetype
+                # filetype = check_filetype(file.filename)
+                # characterimg = name.replace(" ", "_")
+                # file.filename = (f"{characterimg}{filetype}")
+
+                # Save file in /static/images folder
+                file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                          app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
+    # Large file size error
+    except RequestEntityTooLarge:
+        flash("Image size exceeds the 16MB limit")
+        return redirect("/database/add/character")
+        # Form submission
     if request.method == "POST":
         name = request.form.get("character-name")
         alias = request.form.get("character-alias")
@@ -141,11 +167,12 @@ def database_character_add():
         gender = request.form.get("character-gender")
         affiliation = request.form.get("character-affiliation")
         description = request.form.get("character-description")
-        profile_image = request.form.get("character-profileimage")
+        profile_image = file.filename
         # Function to add character
-        db.add_character(name, alias, birthdate, deathdate, gender,
-                         affiliation, description, profile_image)
-    return render_template("database_character_add.html")
+        db.character(name=name, alias=alias, birthdate=birthdate, deathdate=deathdate, gender=gender,
+                     affiliation=affiliation, description=description, profile_image=profile_image,
+                     action="add")
+    return render_template("database_character_add.html", form=form)
 
 
 # Add game to db
@@ -157,14 +184,9 @@ def database_game_add():
         title = request.form.get("game-title")
         releasedate = request.form.get('game-releasedate')
         description = request.form.get('game-description')
-        conn = sqlite3.connect("ACDB - Copy.db")
-        cur = conn.cursor()
-        # Add game to db
-        cur.execute(''' INSERT INTO Game (Title, ReleaseDate, Description)
-                    VALUES (?,?,?)''', (title, releasedate, description))
-        conn.commit()
-        conn.close()
-    return render_template('database_game_add.html')
+        db.game(action="add", title=title, releasedate=releasedate,
+                description=description)
+    return render_template('database_game_add.html',)
 
 
 # Route to choose from which table to delete
@@ -187,7 +209,7 @@ def database_character_delete():
 # Route that deletes character from db
 @app.route('/database/delete/character/<int:id>')
 def database_delete_character_id(id):
-    db.delete_character(id)
+    db.character(id=id, action="delete")
     flash("Character successfully deleted!")
     return redirect('/database/delete/character')
 
@@ -251,8 +273,10 @@ def database_edit_character(id):
         description = request.form.get("character-description")
         profile_image = file.filename
         # Update function for character
-        db.update_character(id, name, alias, birthdate, deathdate, gender,
-                            affiliation, description, profile_image)
+        db.character(id=id, name=name, alias=alias, birthdate=birthdate,
+                     deathdate=deathdate, gender=gender,
+                     affiliation=affiliation, description=description,
+                     profile_image=profile_image, action="edit")
         flash("Characer entry successfully edited")
         return redirect(f'/database/edit/character/{id}')
     return render_template("database_character_edit.html", character=character, form=form)
@@ -261,14 +285,17 @@ def database_edit_character(id):
 # Page for individual assassins
 @app.route('/assassin/<int:id>')
 def assassin(id):
-    # Gets character information from database
-    assassin = db.fetch('SELECT * FROM Character WHERE CharacterID = ?',
-                        "one", (id,))
-    # If asssassin not found
-    if not assassin:
-        return redirect('/404')
-    else:
-        return render_template('assassin.html', assassin=assassin)
+    try:
+        # Gets character information from database
+        assassin = db.fetch('SELECT * FROM Character WHERE CharacterID = ?',
+                            "one", (id,))
+        # If asssassin not found
+        if not assassin:
+            return redirect('/404')
+        else:
+            return render_template('assassin.html', assassin=assassin)
+    except OverflowError:
+        return render_template("500.html")
 
 
 # Page for all assassins
@@ -295,21 +322,24 @@ def all_weapons():
 # Page for individual weapons
 @app.route('/weapon/<int:id>')
 def weapon(id):
-    # Get weapon information and name of users
-    weapon = db.fetch('''SELECT Weapon.WeaponID,
-        Weapon.Name,
-        Character.CharacterID,
-        Character.Name,
-        Weapon.Description
-        FROM Weapon
-        JOIN CharacterWeapon ON Weapon.WeaponID = CharacterWeapon.WeaponID
-        JOIN Character ON CharacterWeapon.CharacterID = Character.CharacterID
-        WHERE Weapon.WeaponID = ?;''', 'all', (id,))
-    # If weapon id doesn't exist
-    if not weapon:
-        return render_template('404.html')
-    else:
-        return render_template('weapon.html', weapon=weapon)
+    try:
+        # Get weapon information and name of users
+        weapon = db.fetch('''SELECT Weapon.WeaponID,
+            Weapon.Name,
+            Character.CharacterID,
+            Character.Name,
+            Weapon.Description
+            FROM Weapon
+            JOIN CharacterWeapon ON Weapon.WeaponID = CharacterWeapon.WeaponID
+            JOIN Character ON CharacterWeapon.CharacterID = Character.CharacterID
+            WHERE Weapon.WeaponID = ?;''', 'all', (id,))
+        # If weapon id doesn't exist
+        if not weapon:
+            return render_template('404.html')
+        else:
+            return render_template('weapon.html', weapon=weapon)
+    except OverflowError:
+        return render_template("500.html")
 
 
 # Page for all Games
@@ -323,24 +353,27 @@ def all_games():
 # Page for individual games
 @app.route('/game/<int:id>')
 def game(id):
-    # Gets all games and characters in the game
-    game = db.fetch('''SELECT
-            Game.GameID,
-            Game.Title,
-            Game.ReleaseDate,
-            Game.Description,
-            Game.Image,
-            Character.CharacterID,
-            Character.Name
-        FROM Game
-            JOIN CharacterGame ON Game.GameID = CharacterGame.GameID
-            JOIN Character ON CharacterGame.CharacterID = Character.CharacterID
-        WHERE Game.GameID = ?;''', "all", (id,))
-    # If game doesn't exist
-    if not game:
-        return render_template('404.html')
-    else:
-        return render_template('game.html', game=game)
+    try:
+        # Gets all games and characters in the game
+        game = db.fetch('''SELECT
+                Game.GameID,
+                Game.Title,
+                Game.ReleaseDate,
+                Game.Description,
+                Game.Image,
+                Character.CharacterID,
+                Character.Name
+            FROM Game
+                JOIN CharacterGame ON Game.GameID = CharacterGame.GameID
+                JOIN Character ON CharacterGame.CharacterID = Character.CharacterID
+            WHERE Game.GameID = ?;''', "all", (id,))
+        # If game doesn't exist
+        if not game:
+            return render_template('404.html')
+        else:
+            return render_template('game.html', game=game)
+    except OverflowError:
+        return render_template("500.html")
 
 
 if __name__ == "__main__":

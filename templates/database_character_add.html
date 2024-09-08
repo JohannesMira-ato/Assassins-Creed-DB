@@ -4,6 +4,15 @@
 </div> <!-- db-character-title-->
 <div class="db-form-container">
   <div class="db-form-square">
+    <div class="db-form-message">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      {% for message in messages %}
+      <h2>{{ message }}</h2>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+    </div>
     <form action="/database/add/character" method="POST" enctype="multipart/form-data">
       <label>Name</label>
       <input type="text" name="character-name" /><br />
@@ -19,8 +28,9 @@
       <input type="text" name="character-affiliation" /><br />
       <label>Description</label>
       <input type="text" name="character-description" /><br />
-      <label for="img">Image</label>
-      <input type="file" name="character-image"><br />
+      {{form.hidden_tag()}}
+      {{form.file()}}
+      <br>
       <input type="submit" value="Submit" />
     </form>
   </div> <!-- db-form-square-->
