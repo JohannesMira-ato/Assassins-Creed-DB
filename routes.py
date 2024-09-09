@@ -130,35 +130,10 @@ def database_add():
 
 
 # Page to add to characters table
-# Need to fix the renaming of the file so that it works properly & fix function in db
+# Need to fix not adding info to db
 @app.route('/database/add/character', methods=["GET", "POST"])
 def database_character_add():
-    try:
-    # Image upload
-        form = UploadFileForm()
-        # Check for valid post request
-        if form.validate_on_submit():
-            file = form.file.data  # Get img from form
-            # If img uploaded
-            if file:
-                # Check if img format is allowed
-                if not allowed_file(file.filename):
-                    flash("Only jpg and png files are allowed")
-                    return redirect("/database/add/character")
-
-                # Rename file to character name + filetype
-                # filetype = check_filetype(file.filename)
-                # characterimg = name.replace(" ", "_")
-                # file.filename = (f"{characterimg}{filetype}")
-
-                # Save file in /static/images folder
-                file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),
-                          app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
-    # Large file size error
-    except RequestEntityTooLarge:
-        flash("Image size exceeds the 16MB limit")
-        return redirect("/database/add/character")
-        # Form submission
+    # Form submission
     if request.method == "POST":
         name = request.form.get("character-name")
         alias = request.form.get("character-alias")
@@ -167,7 +142,39 @@ def database_character_add():
         gender = request.form.get("character-gender")
         affiliation = request.form.get("character-affiliation")
         description = request.form.get("character-description")
-        profile_image = file.filename
+        print("1")
+    try:
+        # Image upload
+        form = UploadFileForm()
+        print("2")
+        # Check for valid post request
+        if form.validate_on_submit():
+            file = form.file.data  # Get img from form
+            print("3")
+            # If img uploaded
+            if file:
+                print("4")
+                # Check if img format is allowed
+                if not allowed_file(file.filename):
+                    flash("Only jpg and png files are allowed")
+                    return redirect("/database/add/character")
+                    print("5")
+
+                # Rename file to character name + filetype
+                filetype = check_filetype(file.filename)
+                characterimg = name.replace(" ", "_")
+                file.filename = (f"{characterimg}.{filetype}")
+                print("6")
+
+                # Save file in /static/images folder
+                file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                          app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
+                profile_image = file.filename
+                print("7")
+    # Large file size error
+    except RequestEntityTooLarge:
+        flash("Image size exceeds the 16MB limit")
+        return redirect("/database/add/character")
         # Function to add character
         db.character(name=name, alias=alias, birthdate=birthdate, deathdate=deathdate, gender=gender,
                      affiliation=affiliation, description=description, profile_image=profile_image,

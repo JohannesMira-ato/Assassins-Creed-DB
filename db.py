@@ -22,10 +22,9 @@ def fetch(query, fetchtype, parameter=None):
 
 
 def character(id=None, name=None, alias=None, birthdate=None, deathdate=None,
-              gender=None, affiliation=None, description=None, action=None):
+              gender=None, affiliation=None, description=None, profile_image=None,
+              action=None):
     print("Function active")
-    # if all[id, name, alias, birthdate, deathdate, gender, affiliation, description] is None:
-    #     return None
     # database connection
     conn = sqlite3.connect(database)
     cur = conn.cursor()
@@ -34,13 +33,13 @@ def character(id=None, name=None, alias=None, birthdate=None, deathdate=None,
                         gender, affiliation, description, profileimage)
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?);""",
                     (name, alias, birthdate, deathdate, gender, affiliation,
-                     description, profileimage,))
+                     description, profile_image,))
     if action == "edit":
         cur.execute(f'''UPDATE Character
                 SET Name="{name}", Alias="{alias}", Birthdate="{birthdate}",
                 Deathdate="{deathdate}", Gender="{gender}",
                 Affiliation="{affiliation}", Description="{description}",
-                ProfileImage="{profileimage}"
+                ProfileImage="{profile_image}"
                 Where CharacterID ="{id}";''')
     if action == "delete":
         cur.execute("DELETE FROM Character WHERE CharacterID =?", (id,))
