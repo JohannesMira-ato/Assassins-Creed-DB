@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.secret_key = "SHOCEKR"
 app.config['UPLOAD_FOLDER'] = 'static/images'  # Uploaded file location
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB file size limit
-ALLOWED_EXTENSIONS = set(['png', 'jpg'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg',])
 
 
 def check_filetype(filename):
@@ -133,6 +133,13 @@ def database_add():
 # Need to fix not adding info to db
 @app.route('/database/add/character', methods=["GET", "POST"])
 def database_character_add():
+    profile_image = None  # Initialize profile_image
+    # Initialize form outside the POST block
+    try:
+        form = UploadFileForm()
+    except RequestEntityTooLarge:  # Large file size error
+        flash("Image size exceeds the 16MB limit")
+        return redirect("/database/add/character")
     # Form submission
     if request.method == "POST":
         name = request.form.get("character-name")
@@ -142,40 +149,29 @@ def database_character_add():
         gender = request.form.get("character-gender")
         affiliation = request.form.get("character-affiliation")
         description = request.form.get("character-description")
-        print("1")
-    try:
-        # Image upload
-        form = UploadFileForm()
-        print("2")
-        # Check for valid post request
+        if not name:
+            flash("Character must have a name")
+            return redirect("/database/add/character")
+        # Add img to db
         if form.validate_on_submit():
             file = form.file.data  # Get img from form
-            print("3")
             # If img uploaded
             if file:
-                print("4")
                 # Check if img format is allowed
                 if not allowed_file(file.filename):
                     flash("Only jpg and png files are allowed")
                     return redirect("/database/add/character")
-                    print("5")
 
                 # Rename file to character name + filetype
                 filetype = check_filetype(file.filename)
                 characterimg = name.replace(" ", "_")
                 file.filename = (f"{characterimg}.{filetype}")
-                print("6")
 
                 # Save file in /static/images folder
                 file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),
                           app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
                 profile_image = file.filename
-                print("7")
-    # Large file size error
-    except RequestEntityTooLarge:
-        flash("Image size exceeds the 16MB limit")
-        return redirect("/database/add/character")
-        # Function to add character
+            # Function to add character
         db.character(name=name, alias=alias, birthdate=birthdate, deathdate=deathdate, gender=gender,
                      affiliation=affiliation, description=description, profile_image=profile_image,
                      action="add")

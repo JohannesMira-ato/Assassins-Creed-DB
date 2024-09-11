@@ -24,7 +24,6 @@ def fetch(query, fetchtype, parameter=None):
 def character(id=None, name=None, alias=None, birthdate=None, deathdate=None,
               gender=None, affiliation=None, description=None, profile_image=None,
               action=None):
-    print("Function active")
     # database connection
     conn = sqlite3.connect(database)
     cur = conn.cursor()
