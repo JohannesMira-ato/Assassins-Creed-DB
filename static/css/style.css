@@ -100,7 +100,31 @@ footer {
     text-align: center;
 }
 
+/* Lore for homepage */
+.home-lore-container{
+    display: grid;
+    grid-template-columns: 30% auto auto 30%;
+    color: white;
+    padding: 50px;
+}
+
+.home-lore-text{
+    grid-column-start: 2;
+}
+
+.home-lore-img{
+    grid-column-start: 3;
+}
+
 /*"All" pages*/
+.all-title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 5rem;
+}
+
 .all-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -479,6 +503,6 @@ footer {
 @media (min-width: 2560px) {
     .home-hero-img{
         width: 2560px;
-        height: auto;
+        height: 1080px;
     }    
 }
