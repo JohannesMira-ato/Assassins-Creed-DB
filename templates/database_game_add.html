@@ -8,14 +8,21 @@
     <div class="db-form-square">
 
         <form action="/database/add/game" method="POST">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <p class="db-form-message">{{ message }}</p>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
             <label>Title</label>
-            <input type="text" name="game-title" maxlength="50"><br>
+            <input type="text" name="game-title" maxlength="50" pattern="[A-Za-z0-9 ]+"><br>
             <label>ReleaseDate</label>
-            <input type="text" name="game-releasedate" maxlength="50"><br>
+            <input type="text" name="game-releasedate" maxlength="50" pattern="[A-Za-z0-9 ]+"><br>
             <label>Description</label>
-            <input type="text" name="game-description" maxlength="150"><br>
+            <input type="text" name="game-description" maxlength="150" pattern="[A-Za-z0-9 ]+"><br>
             <label>Image</label>
-            <input type="text" name="game-image"><br>
+            <input type="text" name="game-image" maxlength="50"><br>
             <input type="submit">
 
         </form>

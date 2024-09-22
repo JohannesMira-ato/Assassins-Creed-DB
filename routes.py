@@ -175,6 +175,7 @@ def database_character_add():
         db.character(name=name, alias=alias, birthdate=birthdate, deathdate=deathdate, gender=gender,
                      affiliation=affiliation, description=description, profile_image=profile_image,
                      action="add")
+        flash("Character Successfully added to database")
     return render_template("database_character_add.html", form=form)
 
 
@@ -183,12 +184,16 @@ def database_character_add():
 def database_game_add():
     # Form submission
     if request.method == "POST":
-        # All user input
-        title = request.form.get("game-title")
-        releasedate = request.form.get('game-releasedate')
-        description = request.form.get('game-description')
-        db.game(action="add", title=title, releasedate=releasedate,
-                description=description)
+        try:
+            # All user input
+            title = request.form.get("game-title")
+            releasedate = request.form.get('game-releasedate')
+            description = request.form.get('game-description')
+            db.game(action="add", title=title, releasedate=releasedate,
+                    description=description)
+        except TypeError:
+            flash("Invalid Submission")
+            return redirect('/database/add/game')
     return render_template('database_game_add.html',)
 
 
@@ -276,6 +281,9 @@ def database_edit_character(id):
         description = request.form.get("character-description")
         profile_image = file.filename
         # Update function for character
+        if name == "":
+            flash("Character must have a name")
+            return redirect(f'/database/edit/character/{id}')
         db.character(id=id, name=name, alias=alias, birthdate=birthdate,
                      deathdate=deathdate, gender=gender,
                      affiliation=affiliation, description=description,

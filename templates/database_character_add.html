@@ -15,19 +15,19 @@
     </div>
     <form action="/database/add/character" method="POST" enctype="multipart/form-data">
       <label>Name</label>
-      <input type="text" name="character-name" maxlength="50"/><br />
+      <input type="text" name="character-name" maxlength="50" pattern="[A-Za-z0-9 ]+"/><br />
       <label>Alias</label>
-      <input type="text" name="character-alias" maxlength="50"/><br />
+      <input type="text" name="character-alias" maxlength="50" pattern="[A-Za-z0-9 ]+"/><br />
       <label>Birthdate</label>
-      <input type="text" name="character-birthdate" maxlength="50"/><br />
+      <input type="text" name="character-birthdate" maxlength="50" pattern="[A-Za-z0-9 ]+"/><br />
       <label>Deathdate</label>
-      <input type="text" name="character-deathdate" maxlength="50"/><br />
+      <input type="text" name="character-deathdate" maxlength="50" pattern="[A-Za-z0-9 ]+"/><br />
       <label>Gender</label>
-      <input type="text" name="character-gender" maxlength="50"/><br />
+      <input type="text" name="character-gender" maxlength="50" pattern="[A-Za-z0-9 ]+"/><br />
       <label>Affiliation</label>
-      <input type="text" name="character-affiliation" maxlength="50"/><br />
+      <input type="text" name="character-affiliation" maxlength="50" pattern="[A-Za-z0-9 ]+"/><br />
       <label>Description</label>
-      <input type="text" name="character-description" maxlength="150"/><br />
+      <input type="text" name="character-description" maxlength="150" pattern="[A-Za-z0-9 ]+"/><br />
       {{form.hidden_tag()}}
       {{form.file()}}
       <br>

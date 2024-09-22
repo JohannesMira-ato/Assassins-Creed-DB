@@ -15,19 +15,19 @@
     </div>
       <form action='/database/edit/character/{{character[0]}}' method="POST" enctype="multipart/form-data">
         <label>Name</label>
-        <input type="text" name="character-name" value="{{character[1]}}" maxlength="50"/><br />
+        <input type="text" name="character-name" value="{{character[1]}}" maxlength="50"pattern="[A-Za-z0-9 ]+"/><br />
         <label>Alias</label>
-        <input type="text" name="character-alias" value="{{character[2]}}" maxlength="50"/><br />
+        <input type="text" name="character-alias" value="{{character[2]}}" maxlength="50" pattern="[A-Za-z0-9 ]+"/><br />
         <label>Birthdate</label>
-        <input type="text" name="character-birthdate" value="{{character[3]}}" maxlength="50" /><br />
+        <input type="text" name="character-birthdate" value="{{character[3]}}" maxlength="50" pattern="[A-Za-z0-9 ]+"/><br />
         <label>Deathdate</label>
-        <input type="text" name="character-deathdate" value="{{character[4]}}" maxlength="50"/><br />
+        <input type="text" name="character-deathdate" value="{{character[4]}}" maxlength="50" pattern="[A-Za-z0-9 ]+"/><br />
         <label>Gender</label>
-        <input type="text" name="character-gender" value="{{character[5]}}" maxlength="50"/><br />
+        <input type="text" name="character-gender" value="{{character[5]}}" maxlength="50" pattern="[A-Za-z0-9 ]+"/><br />
         <label>Affiliation</label>
-        <input type="text" name="character-affiliation" value="{{character[6]}}" maxlength="50"/><br />
+        <input type="text" name="character-affiliation" value="{{character[6]}}" maxlength="50" pattern="[A-Za-z0-9 ]+"/><br />
         <label>Description</label>
-        <input type="text" name="character-description" value="{{character[7]}}" maxlength="150"/><br />
+        <input type="text" name="character-description" value="{{character[7]}}" maxlength="150" pattern="[A-Za-z0-9 ]+"/><br />
         {{form.hidden_tag()}}
         {{form.file()}}
         <input type="submit" value="Submit"/>

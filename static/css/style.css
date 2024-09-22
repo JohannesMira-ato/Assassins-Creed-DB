@@ -34,10 +34,18 @@ body {
 
 /* Styling items in header except logo */
 .header-item {
-    padding-right: 2rem;
-    padding-top: 20px;
-    position: relative;
+    padding: 20px;
     top: 40px;
+    position: relative;
+    text-align: center;
+}
+
+.header-img:hover{
+    background-color: #444546;
+}
+
+.header-item:hover{
+    background-color: #444546;
 }
 
 /*Footer*/
@@ -66,6 +74,7 @@ footer {
     position: relative;
     top: 10px;
     color: #FFFFFF;
+    overflow: hidden;
 }
 
 /* Bottom section of footer img */
