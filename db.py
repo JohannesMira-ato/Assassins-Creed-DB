@@ -20,6 +20,17 @@ def fetch(query, fetchtype, parameter=None):
     conn.close()
     return results
 
+def account(username, password=None, action=None):
+    conn = sqlite3.connect(database)
+    cur = conn.cursor()
+    if action == "add":
+        cur.execute(f"INSERT INTO UserInfo (Username, Password)\
+                     values ('{username}', '{password}')")
+        conn.commit()
+        conn.close()
+    if action =="delete":
+        pass
+        # Make delete acc stuff
 
 def character(id=None, name=None, alias=None, birthdate=None, deathdate=None,
               gender=None, affiliation=None, description=None, profile_image=None,

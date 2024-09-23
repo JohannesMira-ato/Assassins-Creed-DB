@@ -4,7 +4,6 @@ from wtforms import FileField, SubmitField
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import RequestEntityTooLarge
 import os
-import sqlite3
 import db
 
 app = Flask(__name__)
@@ -52,13 +51,7 @@ def register():
         username = request.form.get('username')
         password = request.form.get('password')
         confirm_password = request.form.get('confirm_password')
-        # Database setup
-        conn = sqlite3.connect("Accounts.db")
-        cur = conn.cursor()
-        # Search for username matching user input username in db
-        cur.execute(f"""SELECT Username FROM UserInfo
-                    WHERE Username = '{username}';""")
-        match = cur.fetchone()
+        match = db.fetch("SELECT Username from UserInfo where USERNAME = ?", "one",(username,))
         # If any of the input fields are empty
         if not username or not password or not confirm_password:
             flash("Please fill out all fields correctly")
@@ -72,10 +65,7 @@ def register():
             flash("Passwords do not match")
             return redirect('/register')
         # Add account to database
-        cur.execute(f"INSERT INTO UserInfo (Username, Password)\
-                     values ('{username}', '{password}')")
-        conn.commit()
-        conn.close()
+        db.character({username}, {password}, action="add")
         flash("Account Successfully Created!")
         return redirect('/login', code=302)
     return render_template("register.html")
@@ -89,15 +79,9 @@ def login():
         # All user input
         username = request.form.get("username")
         password = request.form.get("password")
-        conn = sqlite3.connect("Accounts.db")
-        cur = conn.cursor()
         # Look for existing account with user inputted username
-        cur.execute(f"""
-            SELECT Username, Password
-            FROM UserInfo
-            WHERE Username = '{username}';""")
-        user = cur.fetchone()
-        # If user input matches database
+        user = db.fetch("SELECT Username, Password FROM UserInfo WHERE username = ?", "one", (username,))
+        # If user input matches databasef
         if user and password == user[1]:
             session['username'] = user[0]
             return redirect("/dashboard", code=302)
@@ -130,7 +114,6 @@ def database_add():
 
 
 # Page to add to characters table
-# Need to fix not adding info to db
 @app.route('/database/add/character', methods=["GET", "POST"])
 def database_character_add():
     profile_image = None  # Initialize profile_image
@@ -313,9 +296,6 @@ def assassin(id):
 @app.route('/all_assassins')
 def all_assassins():
     # All characters who's affiliation is "Assassin"
-    # assassins = db.fetch('''SELECT CharacterID, Name, ProfileImage FROM
-    #                     Character WHERE Affiliation LIKE "%Assassin%";''',
-    #                      "all")
     assassins = db.fetch(query='''SELECT CharacterID, Name, ProfileImage FROM
                          Character WHERE Affiliation LIKE "%Assassin%";''',
                          fetchtype="all")
@@ -377,7 +357,7 @@ def game(id):
             FROM Game
                 JOIN CharacterGame ON Game.GameID = CharacterGame.GameID
                 JOIN Character ON CharacterGame.CharacterID = Character.CharacterID
-            WHERE Game.GameID = ?;''', "all", (id,))
+                WHERE Game.GameID = ?;''', "all", (id,))
         # If game doesn't exist
         if not game:
             return render_template('404.html')
@@ -388,4 +368,4 @@ def game(id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)  # MUST BE FINAL LINE
+    app.run(debug=True)  # MUST BE FINAL LINE, DEBUGGER
