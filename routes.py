@@ -1,13 +1,16 @@
+# pip install flask
 from flask import Flask, render_template, request, redirect, session, flash
-from flask_wtf import FlaskForm  # pip install flask_wtf wtforms
+# pip install flask_wtf wtforms
+from flask_wtf import FlaskForm
 from wtforms import FileField, SubmitField
+# pip install werkzeug
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import RequestEntityTooLarge
 import os
 import db
 
 app = Flask(__name__)
-app.secret_key = "SHOCEKR"
+app.secret_key = os.urandom(24)
 app.config['UPLOAD_FOLDER'] = 'static/images'  # Uploaded file location
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB file size limit
 ALLOWED_EXTENSIONS = set(['png', 'jpg',])
@@ -193,7 +196,7 @@ def database_character_delete():
     characters = db.fetch("SELECT CharacterID, Name FROM CHARACTER", "all")
     # If nothing found in db
     if not characters:
-        return redirect('/404')
+        return render_template("404.html")
     return render_template('database_character_delete.html', characters=characters)
 
 
@@ -226,7 +229,7 @@ def database_edit_character(id):
     character = db.fetch("Select * FROM Character WHERE CharacterID = ?", "one", (id,))
     # If character doesn't exist
     if not character:
-        return redirect('/404')
+        return render_template("404.html")
     # Image upload
     try:
         form = UploadFileForm()
@@ -285,7 +288,7 @@ def assassin(id):
                             "one", (id,))
         # If asssassin not found
         if not assassin:
-            return redirect('/404')
+            return render_template("404.html")
         else:
             return render_template('assassin.html', assassin=assassin)
     except OverflowError:

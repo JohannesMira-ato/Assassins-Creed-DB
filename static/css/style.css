@@ -40,10 +40,6 @@ body {
     text-align: center;
 }
 
-.header-img:hover{
-    background-color: #444546;
-}
-
 .header-item:hover{
     background-color: #444546;
 }
@@ -144,7 +140,7 @@ footer {
 }
 /* Container for all pages, contains img and name */
 .all-container {
-    width: 325px;
+    width: 370px;
     background-color: #2C2D2E;
     border-radius: 10px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
