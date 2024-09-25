@@ -49,6 +49,7 @@ def homepage():
 @app.route('/register', methods=["GET", "POST"])
 def register():
     # Form submission
+    character_limit = 30
     if request.method == "POST":
         # All user input
         username = request.form.get('username')
@@ -71,12 +72,13 @@ def register():
         db.character({username}, {password}, action="add")
         flash("Account Successfully Created!")
         return redirect('/login', code=302)
-    return render_template("register.html")
+    return render_template("register.html", character_limit=character_limit)
 
 
 # Login page
 @app.route('/login', methods=["GET", "POST"])
 def login():
+    character_limit = 30
     # Form submission
     if request.method == "POST":
         # All user input
@@ -92,7 +94,7 @@ def login():
         else:
             flash("Invalid Login")
             return redirect('/login')
-    return render_template('login.html')
+    return render_template('login.html', character_limit=character_limit)
 
 
 # Logout route
@@ -124,6 +126,8 @@ def database_add():
 # Page to add to characters table
 @app.route('/database/add/character', methods=["GET", "POST"])
 def database_character_add():
+    character_limit = 50
+    description_limit = 150
     if 'username' in session:
         profile_image = None  # Initialize profile_image
         # Initialize form outside the POST block
@@ -173,7 +177,9 @@ def database_character_add():
                          profile_image=profile_image,
                          action="add")
             flash("Character Successfully added to database")
-        return render_template("database_character_add.html", form=form)
+        return render_template("database_character_add.html", form=form,
+                               character_limit=character_limit,
+                               description_limit=description_limit)
     else:
         flash("You must be log in to that page")
         return redirect('/login', code=302)
@@ -182,6 +188,8 @@ def database_character_add():
 # Add game to db
 @app.route('/database/add/game', methods=["GET", "POST"])
 def database_game_add():
+    character_limit = 50
+    description_limit = 150
     if 'username' in session:
         # Form submission
         if request.method == "POST":
@@ -190,12 +198,18 @@ def database_game_add():
                 title = request.form.get("game-title")
                 releasedate = request.form.get('game-releasedate')
                 description = request.form.get('game-description')
+                if title == "":
+                    flash("Game must have a name")
+                    return redirect('/database/add/game')
                 db.game(action="add", title=title, releasedate=releasedate,
                         description=description)
+                flash("Game successfully added to database")
             except TypeError:
                 flash("Invalid Submission")
                 return redirect('/database/add/game')
-        return render_template('database_game_add.html',)
+        return render_template('database_game_add.html',
+                               character_limit=character_limit,
+                               description_limit=description_limit)
     else:
         flash("You must be log in to that page")
         return redirect('/login', code=302)
@@ -259,6 +273,8 @@ def database_edit_character_choice():
 # Route to go to form to edit character entry
 @app.route('/database/edit/character/<int:id>', methods=["GET", "POST"])
 def database_edit_character(id):
+    character_limit = 50
+    description_limit = 150
     if 'username' in session:
         # Get character from database
         character = db.fetch("Select * FROM Character WHERE CharacterID = ?", "one", (id,))
@@ -311,7 +327,10 @@ def database_edit_character(id):
                          profile_image=profile_image, action="edit")
             flash("Characer entry successfully edited")
             return redirect(f'/database/edit/character/{id}')
-        return render_template("database_character_edit.html", character=character, form=form)
+        return render_template("database_character_edit.html",
+                               character=character, form=form,
+                               character_limit=character_limit,
+                               description_limit=description_limit)
     else:
         flash("You must be log in to that page")
         return redirect('/login', code=302)

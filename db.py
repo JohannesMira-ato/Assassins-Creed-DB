@@ -1,5 +1,5 @@
 import sqlite3
-database = "ACDB.db"  # CURRENTLY A TEST DATABASE
+database = "ACDB - Copy.db"  # CURRENTLY A TEST DATABASE
 
 
 #  Function to get information from db and for fetchone and fetchall query
@@ -59,10 +59,12 @@ def character(id=None, name=None, alias=None, birthdate=None, deathdate=None,
     conn.close()
 
 
-def game(id, title, releasedate, description, action):
+def game(id=None, title=None, releasedate=None, description=None, action=None):
     # Database connection
     conn = sqlite3.connect("ACDB - Copy.db")
     cur = conn.cursor()
     if action == "add":
         cur.execute(''' INSERT INTO Game (Title, ReleaseDate, Description)
             VALUES (?,?,?)''', (title, releasedate, description))
+        conn.commit()
+        conn.close()

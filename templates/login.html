@@ -15,9 +15,9 @@
                 {% endfor %}
                 {% endif %}
                 {% endwith %}
-                <input type="text" name="username" placeholder="Enter Username"  maxlength="32" pattern="[A-Za-z0-9 .,\\-]+"></label> <br><br>
+                <input type="text" name="username" placeholder="Enter Username"  maxlength="{{character_limit}}" pattern="[A-Za-z0-9 .,\\-]+"></label> <br><br>
                 <div class="password-wrap">
-                    <input type="password" name="password" id="login-password" placeholder="Enter Password"  maxlength="32" pattern="[A-Za-z0-9 .,\\-]+"><br><br>
+                    <input type="password" name="password" id="login-password" placeholder="Enter Password"  maxlength="{{character_limit}}" pattern="[A-Za-z0-9 .,\\-]+"><br><br>
                     <button id="show_password" type="button">
                         <img src="/static/images/eye_closed.svg" alt="Show Password">                    
                     </button>

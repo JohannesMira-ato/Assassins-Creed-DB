@@ -16,13 +16,13 @@
             {% endif %}
             {% endwith %}
             <label>Title</label>
-            <input type="text" name="game-title" maxlength="50" pattern="[A-Za-z0-9 .,\\-]+"><br>
+            <input type="text" name="game-title" maxlength="{{character_limit}}" pattern="[A-Za-z0-9 .,\\-]+"><br>
             <label>ReleaseDate</label>
-            <input type="text" name="game-releasedate" maxlength="50" pattern="[A-Za-z0-9 .,\\-]+"><br>
+            <input type="text" name="game-releasedate" maxlength="{{character_limit}}" pattern="[A-Za-z0-9 .,\\-]+"><br>
             <label>Description</label>
-            <input type="text" name="game-description" maxlength="150" pattern="[A-Za-z0-9 .,\\-]+"><br>
+            <input type="text" name="game-description" maxlength="{{description_limit}}" pattern="[A-Za-z0-9 .,\\-]+"><br>
             <label>Image</label>
-            <input type="text" name="game-image" maxlength="50"><br>
+            <input type="text" name="game-image" maxlength="{{character_limit}}"><br>
             <input type="submit">
 
         </form>

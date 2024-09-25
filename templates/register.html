@@ -13,11 +13,11 @@
             {% endif %}
             {% endwith %}
             <form action="/register" method="POST">
-                <input type="text" name="username" id="username" placeholder="Enter Username" maxlength="32" pattern="[A-Za-z0-9 .,\\-]+"><br><br>
+                <input type="text" name="username" id="username" placeholder="Enter Username" maxlength="{{character_limit}}" pattern="[A-Za-z0-9 .,\\-]+"><br><br>
 
 
                 <div class="password-wrap">
-                    <input type="password" name="password" id="password" placeholder="Enter Password"  maxlength="32" pattern="[A-Za-z0-9 .,\\-]+"><br><br>
+                    <input type="password" name="password" id="password" placeholder="Enter Password"  maxlength="{{character_limit}}" pattern="[A-Za-z0-9 .,\\-]+"><br><br>
                     <button type="button" id="show_password">
                         <img src="/static/images/eye_closed.svg" alt="Show Password">
                     </button>
@@ -39,7 +39,7 @@
                     })</script>
 
                 <div class="password-wrap">
-                    <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password"  maxlength="32" pattern="[A-Za-z0-9 .,\\-]+"><br><br>
+                    <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password"  maxlength="{{character_limit}}" pattern="[A-Za-z0-9 .,\\-]+"><br><br>
                     
                     <button type="button" id="show_password2">
                         <img src="/static/images/eye_closed.svg" alt="Show Password">
