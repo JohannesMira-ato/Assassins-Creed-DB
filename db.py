@@ -1,5 +1,5 @@
 import sqlite3
-database = "ACDB - Copy.db"  # CURRENTLY A TEST DATABASE
+database = "ACDB.db"  # CURRENTLY A TEST DATABASE
 
 
 #  Function to get information from db and for fetchone and fetchall query
