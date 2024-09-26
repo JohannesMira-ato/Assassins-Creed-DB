@@ -62,7 +62,7 @@ def register():
             return redirect('/register')
         # If there is matching username in database
         if match:
-            flash("Username already exists")    
+            flash("Username already exists")
             return redirect('/register')
         # Passwords not matching
         if password != confirm_password:

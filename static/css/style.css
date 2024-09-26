@@ -132,11 +132,11 @@ footer {
 
 .all-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     position: relative;
     gap: 25px;
     margin-top: 100px;
-    left: 6.5%;
+    left: 1.8%;
 }
 /* Container for all pages, contains img and name */
 .all-container {
